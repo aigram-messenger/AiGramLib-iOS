@@ -8,12 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		F7173BAE221D3DFE0029D97C /* AiGramLib.h in Headers */ = {isa = PBXBuildFile; fileRef = F7173BAC221D3DFE0029D97C /* AiGramLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F7173BBC221D5D740029D97C /* ChatBotsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB7221D5D730029D97C /* ChatBotsManager.swift */; };
+		F7173BBD221D5D740029D97C /* BotsStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB8221D5D730029D97C /* BotsStoreManager.swift */; };
+		F7173BBE221D5D740029D97C /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB9221D5D740029D97C /* Entities.swift */; };
+		F7173BBF221D5D740029D97C /* BotProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BBA221D5D740029D97C /* BotProcessor.swift */; };
+		F7173BC0221D5D740029D97C /* UIImage+Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F7173BA9221D3DFE0029D97C /* AiGramLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AiGramLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7173BAC221D3DFE0029D97C /* AiGramLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AiGramLib.h; sourceTree = "<group>"; };
 		F7173BAD221D3DFE0029D97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7173BB7221D5D730029D97C /* ChatBotsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBotsManager.swift; sourceTree = "<group>"; };
+		F7173BB8221D5D730029D97C /* BotsStoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotsStoreManager.swift; sourceTree = "<group>"; };
+		F7173BB9221D5D740029D97C /* Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
+		F7173BBA221D5D740029D97C /* BotProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotProcessor.swift; sourceTree = "<group>"; };
+		F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Sizes.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +56,11 @@
 		F7173BAB221D3DFE0029D97C /* AiGramLib */ = {
 			isa = PBXGroup;
 			children = (
+				F7173BBA221D5D740029D97C /* BotProcessor.swift */,
+				F7173BB8221D5D730029D97C /* BotsStoreManager.swift */,
+				F7173BB7221D5D730029D97C /* ChatBotsManager.swift */,
+				F7173BB9221D5D740029D97C /* Entities.swift */,
+				F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */,
 				F7173BAC221D3DFE0029D97C /* AiGramLib.h */,
 				F7173BAD221D3DFE0029D97C /* Info.plist */,
 			);
@@ -96,6 +111,7 @@
 				TargetAttributes = {
 					F7173BA8221D3DFE0029D97C = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -131,13 +147,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7173BBE221D5D740029D97C /* Entities.swift in Sources */,
+				F7173BBC221D5D740029D97C /* ChatBotsManager.swift in Sources */,
+				F7173BBF221D5D740029D97C /* BotProcessor.swift in Sources */,
+				F7173BBD221D5D740029D97C /* BotsStoreManager.swift in Sources */,
+				F7173BC0221D5D740029D97C /* UIImage+Sizes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		F7173BAF221D3DFE0029D97C /* Debug */ = {
+		F7173BAF221D3DFE0029D97C /* Debug Fork */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -199,9 +220,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = "Debug Fork";
 		};
-		F7173BB0221D3DFE0029D97C /* Release */ = {
+		F7173BB0221D3DFE0029D97C /* Release AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -257,13 +278,14 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = "Release AppStore";
 		};
-		F7173BB2221D3DFE0029D97C /* Debug */ = {
+		F7173BB2221D3DFE0029D97C /* Debug Fork */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = E64M6PYX49;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -271,6 +293,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AiGramLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -278,17 +301,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.olcorporation.olai.AiGramLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = "Debug Fork";
 		};
-		F7173BB3221D3DFE0029D97C /* Release */ = {
+		F7173BB3221D3DFE0029D97C /* Release AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = E64M6PYX49;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -296,6 +322,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AiGramLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,11 +330,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.olcorporation.olai.AiGramLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Release;
+			name = "Release AppStore";
 		};
 /* End XCBuildConfiguration section */
 
@@ -315,20 +343,20 @@
 		F7173BA3221D3DFE0029D97C /* Build configuration list for PBXProject "AiGramLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F7173BAF221D3DFE0029D97C /* Debug */,
-				F7173BB0221D3DFE0029D97C /* Release */,
+				F7173BAF221D3DFE0029D97C /* Debug Fork */,
+				F7173BB0221D3DFE0029D97C /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release AppStore";
 		};
 		F7173BB1221D3DFE0029D97C /* Build configuration list for PBXNativeTarget "AiGramLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F7173BB2221D3DFE0029D97C /* Debug */,
-				F7173BB3221D3DFE0029D97C /* Release */,
+				F7173BB2221D3DFE0029D97C /* Debug Fork */,
+				F7173BB3221D3DFE0029D97C /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release AppStore";
 		};
 /* End XCConfigurationList section */
 	};
