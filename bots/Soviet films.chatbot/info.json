@@ -1,0 +1,16 @@
+{
+    "title": "Советские фильмы",
+    "name": "soviet_films",
+    "shortDescription": "Сборник популярных фраз и цитат из лучших советских фильмов.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "memes",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

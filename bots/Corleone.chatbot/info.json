@@ -1,0 +1,16 @@
+{
+    "title": "Дон Корлеоне",
+    "name": "corleone",
+    "shortDescription": "Главный герой романа Марио Пьюзо «Крёстный отец» и основанного на нём фильма.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "spongebob",
+    "price": 690,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

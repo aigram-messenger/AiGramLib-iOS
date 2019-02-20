@@ -1,0 +1,16 @@
+{
+    "title": "Дэдпул",
+    "name": "deadpool",
+    "shortDescription": "Антигерой комиксов Marvel, обладает нестандартным, циничным чувством юмора.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "films",
+        "men"
+    ],
+    "next": "shrek",
+    "price": 0,
+    "addDate": "15.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

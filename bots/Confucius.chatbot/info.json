@@ -1,0 +1,16 @@
+{
+    "title": "Конфуций",
+    "name": "confucius",
+    "shortDescription": "Древний мыслитель и философ Китая.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "great",
+        "men"
+    ],
+    "next": "einstein",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

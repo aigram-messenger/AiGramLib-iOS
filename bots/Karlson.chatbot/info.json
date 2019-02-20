@@ -1,0 +1,15 @@
+{
+    "title": "Карлсон",
+    "name": "karlson",
+    "shortDescription": "Красивый и в меру упитанный мужчина в самом расцвете сил, живущий на крыше.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "cartoon",
+        "men"
+    ],
+    "price": 69,
+    "addDate": "30.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

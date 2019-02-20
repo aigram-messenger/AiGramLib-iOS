@@ -1,0 +1,16 @@
+{
+    "title": "Тирион Ланнистер",
+    "name": "lannister",
+    "shortDescription": "Остроумный и красноречивый карлик из сериала «Игра престолов».",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "snow",
+    "price": 69,
+    "addDate": "02.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

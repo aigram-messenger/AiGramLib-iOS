@@ -1,0 +1,16 @@
+{
+    "title": "Магистр Йода",
+    "name": "yoda",
+    "shortDescription": "Один из главных персонажей «Звёздных войн», мудрейший и самый сильный джедай.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "films",
+        "men"
+    ],
+    "next": "deadpool",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

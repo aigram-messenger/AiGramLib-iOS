@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public struct BotResponse: Codable, Equatable {
-    let response: [String]
-    let tag: String
+    public let response: [String]
+    public let tag: String
     
     public init(response: [String], tag: String) {
         self.response = response
@@ -95,9 +95,9 @@ public struct ChatBotBackDetails: Codable {
 }
 
 public struct ChatBotDetailsRated: Codable {
-    let userId: String
-    let botId: ChatBot.ChatBotId
-    let rating: String
+    public let userId: String
+    public let botId: ChatBot.ChatBotId
+    public let rating: String
     
     private enum CodingKeys: String, CodingKey {
         case userId = "user_id"
@@ -196,10 +196,6 @@ extension ChatBot: Comparable {
     public static func < (lhs: ChatBot, rhs: ChatBot) -> Bool {
         return lhs.index < rhs.index
     }
-}
-
-extension ChatBot: Identifiable {
-    public var stableId: ChatBotId { return self.name }
 }
 
 public struct ChatBotResult {

@@ -1,0 +1,16 @@
+{
+    "title": "Наполеон",
+    "name": "napoleon",
+    "shortDescription": "Выдающийся французский полководец и государственный деятель.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "great",
+        "men"
+    ],
+    "next": "celentano",
+    "price": 690,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

@@ -7,23 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F7173BAE221D3DFE0029D97C /* AiGramLib.h in Headers */ = {isa = PBXBuildFile; fileRef = F7173BAC221D3DFE0029D97C /* AiGramLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7173BBC221D5D740029D97C /* ChatBotsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB7221D5D730029D97C /* ChatBotsManager.swift */; };
 		F7173BBD221D5D740029D97C /* BotsStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB8221D5D730029D97C /* BotsStoreManager.swift */; };
 		F7173BBE221D5D740029D97C /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB9221D5D740029D97C /* Entities.swift */; };
 		F7173BBF221D5D740029D97C /* BotProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BBA221D5D740029D97C /* BotProcessor.swift */; };
 		F7173BC0221D5D740029D97C /* UIImage+Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */; };
+		F7173C0B221D89830029D97C /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BC7221D626C0029D97C /* FirebaseAuth.framework */; };
+		F7173C0C221D89830029D97C /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BC5221D626C0029D97C /* FirebaseCore.framework */; };
+		F7173C0D221D89830029D97C /* FirebaseFunctions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BC9221D626C0029D97C /* FirebaseFunctions.framework */; };
+		F7173C0E221D89830029D97C /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BCC221D626C0029D97C /* FirebaseInstanceID.framework */; };
+		F7173C0F221D89830029D97C /* FirebaseMLCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BC6221D626C0029D97C /* FirebaseMLCommon.framework */; };
+		F7173C10221D89830029D97C /* FirebaseMLModelInterpreter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BC8221D626C0029D97C /* FirebaseMLModelInterpreter.framework */; };
+		F7173C11221D89830029D97C /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BCB221D626C0029D97C /* GoogleUtilities.framework */; };
+		F7173C12221D89830029D97C /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BCA221D626C0029D97C /* GTMSessionFetcher.framework */; };
+		F7173C13221D89830029D97C /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BEC221D854C0029D97C /* nanopb.framework */; };
+		F7173C14221D89830029D97C /* tensorflow_lite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BCD221D626D0029D97C /* tensorflow_lite.framework */; };
+		F7173C2B221D8D110029D97C /* bots in Resources */ = {isa = PBXBuildFile; fileRef = F7173C2A221D8D110029D97C /* bots */; };
+		F7173C2D221D94010029D97C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7173C2C221D94010029D97C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F7173BA9221D3DFE0029D97C /* AiGramLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AiGramLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7173BAC221D3DFE0029D97C /* AiGramLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AiGramLib.h; sourceTree = "<group>"; };
 		F7173BAD221D3DFE0029D97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7173BB7221D5D730029D97C /* ChatBotsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBotsManager.swift; sourceTree = "<group>"; };
 		F7173BB8221D5D730029D97C /* BotsStoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotsStoreManager.swift; sourceTree = "<group>"; };
 		F7173BB9221D5D740029D97C /* Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
 		F7173BBA221D5D740029D97C /* BotProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotProcessor.swift; sourceTree = "<group>"; };
 		F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Sizes.swift"; sourceTree = "<group>"; };
+		F7173BC5221D626C0029D97C /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = "third-party/FirebaseCore.framework"; sourceTree = "<group>"; };
+		F7173BC6221D626C0029D97C /* FirebaseMLCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseMLCommon.framework; path = "third-party/FirebaseMLCommon.framework"; sourceTree = "<group>"; };
+		F7173BC7221D626C0029D97C /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = "third-party/FirebaseAuth.framework"; sourceTree = "<group>"; };
+		F7173BC8221D626C0029D97C /* FirebaseMLModelInterpreter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseMLModelInterpreter.framework; path = "third-party/FirebaseMLModelInterpreter.framework"; sourceTree = "<group>"; };
+		F7173BC9221D626C0029D97C /* FirebaseFunctions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseFunctions.framework; path = "third-party/FirebaseFunctions.framework"; sourceTree = "<group>"; };
+		F7173BCA221D626C0029D97C /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GTMSessionFetcher.framework; path = "third-party/GTMSessionFetcher.framework"; sourceTree = "<group>"; };
+		F7173BCB221D626C0029D97C /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = "third-party/GoogleUtilities.framework"; sourceTree = "<group>"; };
+		F7173BCC221D626C0029D97C /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = "third-party/FirebaseInstanceID.framework"; sourceTree = "<group>"; };
+		F7173BCD221D626D0029D97C /* tensorflow_lite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = tensorflow_lite.framework; path = "third-party/tensorflow_lite.framework"; sourceTree = "<group>"; };
+		F7173BEC221D854C0029D97C /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = "third-party/nanopb.framework"; sourceTree = "<group>"; };
+		F7173C2A221D8D110029D97C /* bots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bots; sourceTree = "<group>"; };
+		F7173C2C221D94010029D97C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Users/dmitryshelonin/Library/Developer/Xcode/DerivedData/Telegram-iOS-ehiubhapzydtovcbplepczbyczip/Build/Products/Debug Fork-iphonesimulator/AiGramLib.framework/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +53,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7173C0B221D89830029D97C /* FirebaseAuth.framework in Frameworks */,
+				F7173C0C221D89830029D97C /* FirebaseCore.framework in Frameworks */,
+				F7173C0D221D89830029D97C /* FirebaseFunctions.framework in Frameworks */,
+				F7173C0E221D89830029D97C /* FirebaseInstanceID.framework in Frameworks */,
+				F7173C0F221D89830029D97C /* FirebaseMLCommon.framework in Frameworks */,
+				F7173C10221D89830029D97C /* FirebaseMLModelInterpreter.framework in Frameworks */,
+				F7173C11221D89830029D97C /* GoogleUtilities.framework in Frameworks */,
+				F7173C12221D89830029D97C /* GTMSessionFetcher.framework in Frameworks */,
+				F7173C13221D89830029D97C /* nanopb.framework in Frameworks */,
+				F7173C14221D89830029D97C /* tensorflow_lite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,8 +72,11 @@
 		F7173B9F221D3DFE0029D97C = {
 			isa = PBXGroup;
 			children = (
+				F7173C2C221D94010029D97C /* GoogleService-Info.plist */,
+				F7173C2A221D8D110029D97C /* bots */,
 				F7173BAB221D3DFE0029D97C /* AiGramLib */,
 				F7173BAA221D3DFE0029D97C /* Products */,
+				F7173BC4221D626C0029D97C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,10 +96,26 @@
 				F7173BB7221D5D730029D97C /* ChatBotsManager.swift */,
 				F7173BB9221D5D740029D97C /* Entities.swift */,
 				F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */,
-				F7173BAC221D3DFE0029D97C /* AiGramLib.h */,
 				F7173BAD221D3DFE0029D97C /* Info.plist */,
 			);
 			path = AiGramLib;
+			sourceTree = "<group>";
+		};
+		F7173BC4221D626C0029D97C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7173BEC221D854C0029D97C /* nanopb.framework */,
+				F7173BC7221D626C0029D97C /* FirebaseAuth.framework */,
+				F7173BC5221D626C0029D97C /* FirebaseCore.framework */,
+				F7173BC9221D626C0029D97C /* FirebaseFunctions.framework */,
+				F7173BCC221D626C0029D97C /* FirebaseInstanceID.framework */,
+				F7173BC6221D626C0029D97C /* FirebaseMLCommon.framework */,
+				F7173BC8221D626C0029D97C /* FirebaseMLModelInterpreter.framework */,
+				F7173BCB221D626C0029D97C /* GoogleUtilities.framework */,
+				F7173BCA221D626C0029D97C /* GTMSessionFetcher.framework */,
+				F7173BCD221D626D0029D97C /* tensorflow_lite.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,7 +125,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7173BAE221D3DFE0029D97C /* AiGramLib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +187,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7173C2B221D8D110029D97C /* bots in Resources */,
+				F7173C2D221D94010029D97C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,11 +338,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = E64M6PYX49;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/third-party",
+					"$(PROJECT_DIR)/third-party",
+				);
 				INFOPLIST_FILE = AiGramLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -299,6 +354,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.olcorporation.olai.AiGramLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -315,11 +371,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = E64M6PYX49;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"${SRCROOT}/third-party",
+					"$(PROJECT_DIR)/third-party",
+				);
 				INFOPLIST_FILE = AiGramLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -328,6 +387,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.olcorporation.olai.AiGramLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -1,0 +1,16 @@
+{
+    "title": "Терминатор",
+    "name": "terminator",
+    "shortDescription": "Персонаж, сыгранный Арнольдом Шварценеггером.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "daenerys",
+    "price": 69,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

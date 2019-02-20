@@ -1,0 +1,16 @@
+{
+    "title": "Спанч-Боб",
+    "name": "spongebob",
+    "shortDescription": "Чрезмерно оптимистичный мульт-герой, всегда раздражает остальных.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "cartoon",
+        "men"
+    ],
+    "next": "karlson",
+    "price": 138,
+    "addDate": "30.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

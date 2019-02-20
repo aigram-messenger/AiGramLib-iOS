@@ -1,0 +1,16 @@
+{
+    "title": "Скуби-Ду",
+    "name": "scoobydoo",
+    "shortDescription": "Немецкий дог, решает загадки с участием якобы сверхъестественных существ.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "cartoon",
+        "men"
+    ],
+    "next": "kung_fu_panda",
+    "price": 0,
+    "addDate": "30.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

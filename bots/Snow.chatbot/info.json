@@ -1,0 +1,16 @@
+{
+    "title": "Джон Сноу",
+    "name": "snow",
+    "shortDescription": "Бастард Старков и брат Ночного Дозора из сериала «Игра престолов».",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "corleone",
+    "price": 69,
+    "addDate": "02.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

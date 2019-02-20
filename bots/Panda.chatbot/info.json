@@ -1,0 +1,16 @@
+{
+    "title": "Кунг-фу Панда",
+    "name": "kung_fu_panda",
+    "shortDescription": "Персонаж панды По – настоящий мастер Кунг-фу",
+    "type": "bot",
+    "tags": [
+        "free",
+        "cartoon",
+        "men"
+    ],
+    "next": "assistant",
+    "price": 0,
+    "addDate": "06.02.2019",
+    "updateDate": "06.02.2019",
+    "developer": "AiGram Messenger"
+}

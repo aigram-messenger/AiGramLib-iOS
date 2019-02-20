@@ -17,7 +17,7 @@ public enum Result<T> {
 }
 
 public final class ChatBotsManager {
-    static let shared: ChatBotsManager = .init()
+    public static let shared: ChatBotsManager = .init()
     private(set) public var bots: [ChatBot] = []
     private var loadedBotsFlag: Bool = false
     private(set) public var loadedBotsInStore: [ChatBot] = []
@@ -50,6 +50,7 @@ public final class ChatBotsManager {
     private var botsDetailsFromBack: [ChatBot.ChatBotId: ChatBotBackDetails] = [:]
     
     private init() {
+        FirebaseApp.configure()
         queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         searchQueue = OperationQueue()
@@ -364,7 +365,7 @@ extension ChatBotsManager {
         print("BOTS LOCAL URL \(chatBotsUrl)")
         let urls = (try? fm.contentsOfDirectory(at: chatBotsUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
         for url in urls {
-            guard let bot = try? ChatBot(url: url) else { continue }
+            guard let bot = try? ChatBot(url: url), !bot.tags.contains(String(describing: ChatBotTag.free)) else { continue }
             result.append(bot)
         }
         return result
