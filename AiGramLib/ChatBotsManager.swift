@@ -222,7 +222,10 @@ public final class ChatBotsManager {
         do {
             try fm.copyItem(at: bot.url, to: destinationUrl)
             let newBot = try ChatBot(url: destinationUrl)
-            bots.append(newBot)
+            DispatchQueue.main.async {
+                if self.bots.contains(where: { $0 == newBot }) { return }
+                self.bots.append(newBot)
+            }
         } catch {
             return false
         }
