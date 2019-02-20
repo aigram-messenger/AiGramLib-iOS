@@ -23,7 +23,7 @@
 		F7173C13221D89830029D97C /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BEC221D854C0029D97C /* nanopb.framework */; };
 		F7173C14221D89830029D97C /* tensorflow_lite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7173BCD221D626D0029D97C /* tensorflow_lite.framework */; };
 		F7173C2B221D8D110029D97C /* bots in Resources */ = {isa = PBXBuildFile; fileRef = F7173C2A221D8D110029D97C /* bots */; };
-		F7173C2D221D94010029D97C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7173C2C221D94010029D97C /* GoogleService-Info.plist */; };
+		F78E2A78221D9A5C008B37BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F78E2A77221D9A5B008B37BD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,7 @@
 		F7173BCD221D626D0029D97C /* tensorflow_lite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = tensorflow_lite.framework; path = "third-party/tensorflow_lite.framework"; sourceTree = "<group>"; };
 		F7173BEC221D854C0029D97C /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = "third-party/nanopb.framework"; sourceTree = "<group>"; };
 		F7173C2A221D8D110029D97C /* bots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bots; sourceTree = "<group>"; };
-		F7173C2C221D94010029D97C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Users/dmitryshelonin/Library/Developer/Xcode/DerivedData/Telegram-iOS-ehiubhapzydtovcbplepczbyczip/Build/Products/Debug Fork-iphonesimulator/AiGramLib.framework/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F78E2A77221D9A5B008B37BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 		F7173B9F221D3DFE0029D97C = {
 			isa = PBXGroup;
 			children = (
-				F7173C2C221D94010029D97C /* GoogleService-Info.plist */,
+				F78E2A77221D9A5B008B37BD /* GoogleService-Info.plist */,
 				F7173C2A221D8D110029D97C /* bots */,
 				F7173BAB221D3DFE0029D97C /* AiGramLib */,
 				F7173BAA221D3DFE0029D97C /* Products */,
@@ -188,7 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7173C2B221D8D110029D97C /* bots in Resources */,
-				F7173C2D221D94010029D97C /* GoogleService-Info.plist in Resources */,
+				F78E2A78221D9A5C008B37BD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
