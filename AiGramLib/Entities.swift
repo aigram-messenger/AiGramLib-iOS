@@ -124,9 +124,32 @@ public struct ChatBotDetailsRated: Codable {
     }
 }
 
-public struct ChatBot {
-    public typealias ChatBotId = String
-    static let botExtension: String = "chatbot"
+public protocol ChatBotDescriptor {
+    typealias ChatBotId = String
+    
+    static var botExtension: String { get }
+    
+    var url: URL { get }
+    /// (name, extension)
+    var fileNameComponents: (String, String) { get }
+    var type: ChatBotType { get }
+    var id: Int { get }
+    var name: ChatBotId { get }
+    var title: String { get }
+    var shortDescription: String { get }
+    var fullDescription: String { get }
+    var tags: [ChatBotTag] { get }
+    var index: Int { get set }
+    var nextBotId: ChatBotId? { get }
+    var price: Int { get }
+    var addDate: String { get }
+    var updateDate: String { get }
+    var developer: String { get }
+    var version: String { get }
+}
+
+public struct ChatBot: ChatBotDescriptor {
+    public static let botExtension: String = "chatbot"
     
     private let info: ChatBotInfo
     
@@ -137,7 +160,7 @@ public struct ChatBot {
     public var title: String { return info.title }
     public var name: ChatBotId { return info.name }
     public var shortDescription: String { return info.shortDescription }
-    public var type: String { return String(describing: info.type) }
+    public var type: ChatBotType { return info.type }
     public var isTarget: Bool { return name == TargetBotName }
     public var fullDescription: String { return shortDescription }
     public var tags: [String] { return info.tags.map { $0.localizedDescription(info.lang) }}
