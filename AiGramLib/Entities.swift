@@ -68,6 +68,23 @@ public enum ChatBotTag: String, Codable, CustomStringConvertible {
         case .great: return "великие"
         }
     }
+    
+    public func localizedDescription(_ baseLanguageCode: String) -> String {
+        let isEnglish = baseLanguageCode == "en"
+        
+        switch self {
+        case .paid: return isEnglish ? "paid" : "платные"
+        case .free: return isEnglish ? "free" : "бесплатные"
+        case .men: return isEnglish ? "male" : "мужские"
+        case .women: return isEnglish ? "female" : "женские"
+        case .unisex: return isEnglish ? "female/male" : "женские/мужские"
+        case .films: return isEnglish ? "movie characters" : "персонажи фильмов"
+        case .cartoon: return isEnglish ? "cartoon characters" : "персонажи мультфильмов"
+        case .known: return isEnglish ? "famous" : "известные"
+        case .collections: return isEnglish ? "collections" : "коллекции"
+        case .great: return isEnglish ? "great" : "великие"
+        }
+    }
 }
 
 private struct ChatBotInfo: Codable {
@@ -113,6 +130,7 @@ public struct ChatBot {
     private let info: ChatBotInfo
     
     public let url: URL
+    public let baseLanguageCode: String
     public let fileNameComponents: (String, String)
     
     public var id: Int { return name.hashValue }
@@ -122,7 +140,7 @@ public struct ChatBot {
     public var type: String { return String(describing: info.type) }
     public var isTarget: Bool { return name == TargetBotName }
     public var fullDescription: String { return shortDescription }
-    public var tags: [String] { return info.tags.map { String(describing: $0) } }
+    public var tags: [String] { return info.tags.map { $0.localizedDescription(baseLanguageCode) }}
     public var index: Int = 0
     public var nextBotId: ChatBotId? { return info.next }
     public var price: Int { return info.price ?? 0 }
@@ -147,9 +165,11 @@ public struct ChatBot {
         return result
     }
     
-    public init(url: URL) throws {
+    public init(url: URL, baseLanguageCode: String) throws {
         do {
             self.url = url
+            self.baseLanguageCode = baseLanguageCode
+            
             fileNameComponents = (url.deletingPathExtension().lastPathComponent, url.pathExtension)
 
             let decoder = JSONDecoder()

@@ -28,6 +28,22 @@ public final class ChatBotsManager {
     private var storeBotsLoadingStarted: Bool = false
     private var storeBotsLoadingCompletions: [(Result<[ChatBot]>) -> Void] = []
     private let session = URLSession(configuration: .default)
+    private var baseLanguageCode: String = ""
+    
+    public func updateLanguageCodeAndLoadBots(_ code: String) {
+        queue.addOperation { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            if self.baseLanguageCode != code {
+                self.baseLanguageCode = code == "ru" || code == "en" ? code : "ru"
+                self.loadedBotsFlag = false
+                self.storeBotsLoadingStarted = false
+                self.botsInStore(completion: { _ in })
+            }
+        }
+    }
     
     public var autoOpenBots: Bool {
         get { return (UserDefaults.standard.value(forKey: "autoOpenBots") as? Bool) ?? true }
@@ -142,12 +158,13 @@ public final class ChatBotsManager {
             var result: [ChatBot] = []
             
             let bundle = Bundle(for: ChatBotsManager.self)
-            let urls = bundle.urls(forResourcesWithExtension: ChatBot.botExtension, subdirectory: "bots") ?? []
+            let urls = bundle.urls(forResourcesWithExtension: ChatBot.botExtension, subdirectory: "bots/\(self.baseLanguageCode)") ?? []
+            
             var tempBots: [ChatBot.ChatBotId: ChatBot] = [:]
             var linkedNames: Set<ChatBot.ChatBotId> = Set()
             for url in urls {
                 do {
-                    let bot = try ChatBot(url: url)
+                    let bot = try ChatBot(url: url, baseLanguageCode: self.baseLanguageCode)
                     guard !bot.isTarget else { continue }
                     tempBots[bot.name] = bot
                     if let nextName = bot.nextBotId {
@@ -221,7 +238,7 @@ public final class ChatBotsManager {
         
         do {
             try fm.copyItem(at: bot.url, to: destinationUrl)
-            let newBot = try ChatBot(url: destinationUrl)
+            let newBot = try ChatBot(url: destinationUrl, baseLanguageCode: self.baseLanguageCode)
             DispatchQueue.main.async {
                 if self.bots.contains(where: { $0 == newBot }) { return }
                 self.bots.append(newBot)
@@ -346,7 +363,7 @@ extension ChatBotsManager {
         var result: [ChatBot] = []
         for url in urls {
             do {
-                let bot = try ChatBot(url: url)
+                let bot = try ChatBot(url: url, baseLanguageCode: self.baseLanguageCode)
                 guard bot.tags.contains(String(describing: ChatBotTag.free)) else { continue }
                 result.append(bot)
             } catch {
@@ -368,7 +385,7 @@ extension ChatBotsManager {
         print("BOTS LOCAL URL \(chatBotsUrl)")
         let urls = (try? fm.contentsOfDirectory(at: chatBotsUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
         for url in urls {
-            guard let bot = try? ChatBot(url: url), !bot.tags.contains(String(describing: ChatBotTag.free)) else { continue }
+            guard let bot = try? ChatBot(url: url, baseLanguageCode: self.baseLanguageCode), !bot.tags.contains(String(describing: ChatBotTag.free)) else { continue }
             result.append(bot)
         }
         return result
