@@ -1,0 +1,16 @@
+{
+    "title": "Memes",
+    "name": "memes",
+    "shortDescription": "Text information including main popular phrases.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "napoleon",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "22.01.2019",
+    "developer": "AiGram Messenger"
+}

@@ -1,0 +1,16 @@
+{
+    "title": "Shrek",
+    "name": "shrek",
+    "shortDescription": "Giant green ogre from the eponymous cartoon.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "cartoon",
+        "men"
+    ],
+    "next": "scoobydoo",
+    "price": 0,
+    "addDate": "06.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

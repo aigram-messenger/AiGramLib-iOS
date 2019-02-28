@@ -1,0 +1,16 @@
+{
+    "title": "Churchill",
+    "name": "churchill",
+    "shortDescription": "British statesman and politician.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "known",
+        "men"
+    ],
+    "next": "monroe",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

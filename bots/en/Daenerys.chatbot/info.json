@@ -1,0 +1,16 @@
+{
+    "title": "Daenerys Targaryen",
+    "name": "daenerys",
+    "shortDescription": "The representative of a sort of Targaryen from «Game of Thrones» drama series.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "lannister",
+    "price": 69,
+    "addDate": "02.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

@@ -1,0 +1,16 @@
+{
+    "title": "Celentano",
+    "name": "celentano",
+    "shortDescription": "Very charismatic Italian musician, movie actor.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "known",
+        "men"
+    ],
+    "next": "chanel",
+    "price": 690,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

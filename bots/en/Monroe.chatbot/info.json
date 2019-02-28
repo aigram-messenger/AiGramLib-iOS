@@ -1,0 +1,16 @@
+{
+    "title": "Marilyn Monroe",
+    "name": "monroe",
+    "shortDescription": "American movie actress, sex icon of 1950th, singer and model.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "known",
+        "women"
+    ],
+    "next": "yoda",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

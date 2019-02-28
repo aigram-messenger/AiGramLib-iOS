@@ -1,0 +1,15 @@
+{
+    "title": "Karlsson",
+    "name": "karlson",
+    "shortDescription": "Handsome, moderately plump man in his prime living on the roof.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "cartoon",
+        "men"
+    ],
+    "price": 69,
+    "addDate": "30.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

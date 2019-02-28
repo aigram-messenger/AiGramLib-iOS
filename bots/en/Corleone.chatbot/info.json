@@ -1,0 +1,16 @@
+{
+    "title": "Don Corleone",
+    "name": "corleone",
+    "shortDescription": "Main character of the «Godfather» novel by Mario Puzo and main hero of the movie based on the book.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "spongebob",
+    "price": 690,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

@@ -1,0 +1,16 @@
+{
+    "title": "Assistant",
+    "name": "assistant",
+    "shortDescription": "Personal assistant to discuss popular topics of communication.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "soviet_films",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "11.02.2019",
+    "developer": "AiGram Messenger"
+}

@@ -1,0 +1,16 @@
+{
+    "title": "Jon Snow",
+    "name": "snow",
+    "shortDescription": "Bastard of the Starks family and brother of the Night's Watch from «Game of Thrones» drama series.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "men"
+    ],
+    "next": "corleone",
+    "price": 69,
+    "addDate": "02.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

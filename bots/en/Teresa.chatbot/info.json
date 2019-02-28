@@ -1,0 +1,16 @@
+{
+    "title": "Mother Teresa",
+    "name": "teresa",
+    "shortDescription": "Catholic nun, founder of the Missionaries of Charity, a Catholic order of nuns.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "known",
+        "women"
+    ],
+    "next": "terminator",
+    "price": 345,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

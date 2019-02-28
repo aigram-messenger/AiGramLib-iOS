@@ -1,0 +1,16 @@
+{
+    "title": "Grand Master Yoda",
+    "name": "yoda",
+    "shortDescription": "One of the main characters of the «Star Wars» movie, the wisest and strongest Jedi.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "films",
+        "men"
+    ],
+    "next": "deadpool",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

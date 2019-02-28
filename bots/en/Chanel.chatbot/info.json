@@ -1,0 +1,16 @@
+{
+    "title": "Coco Chanel",
+    "name": "chanel",
+    "shortDescription": "French designer who founded the fashion house «Chanel».",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "known",
+        "women"
+    ],
+    "next": "tsoy",
+    "price": 690,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

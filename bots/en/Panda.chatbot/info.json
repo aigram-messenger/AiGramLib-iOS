@@ -1,0 +1,16 @@
+{
+    "title": "Kung Fu Panda",
+    "name": "kung_fu_panda",
+    "shortDescription": "Panda Po character - real Kung Fu Master.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "cartoon",
+        "men"
+    ],
+    "next": "assistant",
+    "price": 0,
+    "addDate": "06.02.2019",
+    "updateDate": "06.02.2019",
+    "developer": "AiGram Messenger"
+}

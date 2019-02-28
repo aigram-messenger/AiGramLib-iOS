@@ -1,0 +1,16 @@
+{
+    "title": "Einstein",
+    "name": "einstein",
+    "shortDescription": "Genius, theoretical physicist, remarkable person.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "known",
+        "men"
+    ],
+    "next": "churchill",
+    "price": 0,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}

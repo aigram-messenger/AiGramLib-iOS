@@ -1,0 +1,16 @@
+{
+    "title": "Deadpool",
+    "name": "deadpool",
+    "shortDescription": "Antihero of Marvel comics has a peculiar and cynical sense of humor.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "films",
+        "men"
+    ],
+    "next": "shrek",
+    "price": 0,
+    "addDate": "15.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger"
+}
