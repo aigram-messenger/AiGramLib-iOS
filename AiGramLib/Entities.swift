@@ -156,10 +156,14 @@ public struct ChatBot {
     public let preview: UIImage
     
     public var isLocal: Bool {
-        guard !self.tags.contains(String(describing: ChatBotTag.free)) else { return true }
+        guard
+            !self.tags.contains(ChatBotTag.free.localizedDescription(baseLanguageCode))
+        else {
+            return true
+        }
         let fm = FileManager.default
         guard var destinationUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
-        destinationUrl.appendPathComponent("chatbots", isDirectory: true)
+        destinationUrl.appendPathComponent("chatbots/\(baseLanguageCode)", isDirectory: true)
         destinationUrl.appendPathComponent("\(fileNameComponents.0).\(fileNameComponents.1)", isDirectory: true)
         let result = (try? destinationUrl.checkResourceIsReachable()) ?? false
         return result

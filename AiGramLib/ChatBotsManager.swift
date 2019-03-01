@@ -41,6 +41,7 @@ public final class ChatBotsManager {
                 self.loadedBotsFlag = false
                 self.storeBotsLoadingStarted = false
                 self.botsInStore(completion: { _ in })
+                self.setFreeAndLocalBots()
             }
         }
     }
@@ -61,6 +62,13 @@ public final class ChatBotsManager {
             https://aigram.app/dl
             """
     }
+    private var botUrls: [URL] {
+        let bundle = Bundle(for: ChatBotsManager.self)
+        return bundle.urls(
+            forResourcesWithExtension: ChatBot.botExtension,
+            subdirectory: "bots/\(self.baseLanguageCode)"
+            ) ?? []
+    }
     
     private lazy var functions = Functions.functions()
     private var botsDetailsFromBack: [ChatBot.ChatBotId: ChatBotBackDetails] = [:]
@@ -72,10 +80,6 @@ public final class ChatBotsManager {
         searchQueue = OperationQueue()
         searchQueue.maxConcurrentOperationCount = 1
         
-        let free = self.freeBots()
-        let local = self.localBots()
-        self.bots = free + local
-        
         self.getTreshovieBots { result in
             self.botsDetailsFromBack = result
         }
@@ -84,6 +88,12 @@ public final class ChatBotsManager {
 //        for bot in temp {
 //            deleteBot(bot)
 //        }
+    }
+    
+    private func setFreeAndLocalBots() {
+        let free = self.freeBots()
+        let local = self.localBots()
+        self.bots = free + local
     }
     
     public func botDetails(_ bot: ChatBot) -> ChatBotBackDetails {
@@ -147,6 +157,10 @@ public final class ChatBotsManager {
     }
     
     public func botsInStore(completion: @escaping (Result<[ChatBot]>) -> Void) {
+        guard !baseLanguageCode.isEmpty else {
+            print("Please, set language code before")
+            return
+        }
         if loadedBotsFlag {
             completion(.success(self.loadedBotsInStore))
             return
@@ -154,15 +168,13 @@ public final class ChatBotsManager {
         storeBotsLoadingCompletions.append(completion)
         guard !storeBotsLoadingStarted else { return }
         self.storeBotsLoadingStarted = true
-        DispatchQueue.global().asyncAfter(deadline: .now()) {
+        DispatchQueue.global().asyncAfter(deadline: .now()) { [weak self] in
+            guard let self = self else { return }
+            
             var result: [ChatBot] = []
-            
-            let bundle = Bundle(for: ChatBotsManager.self)
-            let urls = bundle.urls(forResourcesWithExtension: ChatBot.botExtension, subdirectory: "bots/\(self.baseLanguageCode)") ?? []
-            
             var tempBots: [ChatBot.ChatBotId: ChatBot] = [:]
             var linkedNames: Set<ChatBot.ChatBotId> = Set()
-            for url in urls {
+            for url in self.botUrls {
                 do {
                     let bot = try ChatBot(url: url, baseLanguageCode: self.baseLanguageCode)
                     guard !bot.isTarget else { continue }
@@ -218,12 +230,22 @@ public final class ChatBotsManager {
         self.searchQueue.addOperation(block)
     }
     
-    public func copyBot(_ bot: ChatBot) -> Bool {
-        guard !bot.tags.contains(String(describing: ChatBotTag.free)) else { return true }
-        let fm = FileManager.default
-        guard var destinationUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
+    private var localBotsRepo: URL? {
+        guard
+            var destinationUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        else {
+            return nil
+        }
         
-        destinationUrl.appendPathComponent("chatbots", isDirectory: true)
+        destinationUrl.appendPathComponent("chatbots/\(baseLanguageCode)", isDirectory: true)
+        return destinationUrl
+    }
+    
+    public func copyBot(_ bot: ChatBot) -> Bool {
+        guard !isFreeBot(bot) else { return true }
+        let fm = FileManager.default
+        guard var destinationUrl = localBotsRepo else { return false }
+        
         if !((try? destinationUrl.checkResourceIsReachable()) ?? false) {
             do {
                 try fm.createDirectory(at: destinationUrl, withIntermediateDirectories: true, attributes: nil)
@@ -358,13 +380,15 @@ extension ChatBotsManager {
     }
     
     private func freeBots() -> [ChatBot] {
-        let bundle = Bundle(for: ChatBotsManager.self)
-        let urls = bundle.urls(forResourcesWithExtension: ChatBot.botExtension, subdirectory: "bots") ?? []
+        guard !baseLanguageCode.isEmpty else {
+            print("Please, set language code before")
+            return []
+        }
         var result: [ChatBot] = []
-        for url in urls {
+        for url in botUrls {
             do {
                 let bot = try ChatBot(url: url, baseLanguageCode: self.baseLanguageCode)
-                guard bot.tags.contains(String(describing: ChatBotTag.free)) else { continue }
+                guard isFreeBot(bot) else { continue }
                 result.append(bot)
             } catch {
                 print("ERROR INIT BOT \(error)")
@@ -375,9 +399,8 @@ extension ChatBotsManager {
     
     private func localBots() -> [ChatBot] {
         let fm = FileManager.default
-        guard var chatBotsUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return [] }
+        guard let chatBotsUrl = localBotsRepo else { return [] }
         var result: [ChatBot] = []
-        chatBotsUrl.appendPathComponent("chatbots", isDirectory: true)
         if !((try? chatBotsUrl.checkResourceIsReachable()) ?? false) {
             try? fm.createDirectory(at: chatBotsUrl, withIntermediateDirectories: true, attributes: nil)
         }
@@ -385,10 +408,14 @@ extension ChatBotsManager {
         print("BOTS LOCAL URL \(chatBotsUrl)")
         let urls = (try? fm.contentsOfDirectory(at: chatBotsUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
         for url in urls {
-            guard let bot = try? ChatBot(url: url, baseLanguageCode: self.baseLanguageCode), !bot.tags.contains(String(describing: ChatBotTag.free)) else { continue }
+            guard let bot = try? ChatBot(url: url, baseLanguageCode: self.baseLanguageCode), !isFreeBot(bot) else { continue }
             result.append(bot)
         }
         return result
+    }
+    
+    private func isFreeBot(_ bot: ChatBot) -> Bool {
+        return bot.tags.contains(ChatBotTag.free.localizedDescription(baseLanguageCode))
     }
     
     private func getTreshovieBots(success: @escaping ([ChatBot.ChatBotId: ChatBotBackDetails]) -> Void) {
