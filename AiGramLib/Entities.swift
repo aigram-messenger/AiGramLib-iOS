@@ -98,6 +98,7 @@ private struct ChatBotInfo: Codable {
     let addDate: String
     let updateDate: String
     let developer: String
+    let lang: String
 }
 
 public struct ChatBotBackDetails: Codable {
@@ -130,7 +131,6 @@ public struct ChatBot {
     private let info: ChatBotInfo
     
     public let url: URL
-    public let baseLanguageCode: String
     public let fileNameComponents: (String, String)
     
     public var id: Int { return name.hashValue }
@@ -140,7 +140,7 @@ public struct ChatBot {
     public var type: String { return String(describing: info.type) }
     public var isTarget: Bool { return name == TargetBotName }
     public var fullDescription: String { return shortDescription }
-    public var tags: [String] { return info.tags.map { $0.localizedDescription(baseLanguageCode) }}
+    public var tags: [String] { return info.tags.map { $0.localizedDescription(info.lang) }}
     public var index: Int = 0
     public var nextBotId: ChatBotId? { return info.next }
     public var price: Int { return info.price ?? 0 }
@@ -157,22 +157,21 @@ public struct ChatBot {
     
     public var isLocal: Bool {
         guard
-            !self.tags.contains(ChatBotTag.free.localizedDescription(baseLanguageCode))
+            !self.tags.contains(ChatBotTag.free.localizedDescription(info.lang))
         else {
             return true
         }
         let fm = FileManager.default
         guard var destinationUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
-        destinationUrl.appendPathComponent("chatbots/\(baseLanguageCode)", isDirectory: true)
+        destinationUrl.appendPathComponent("chatbots/\(info.lang)", isDirectory: true)
         destinationUrl.appendPathComponent("\(fileNameComponents.0).\(fileNameComponents.1)", isDirectory: true)
         let result = (try? destinationUrl.checkResourceIsReachable()) ?? false
         return result
     }
     
-    public init(url: URL, baseLanguageCode: String) throws {
+    public init(url: URL) throws {
         do {
             self.url = url
-            self.baseLanguageCode = baseLanguageCode
             
             fileNameComponents = (url.deletingPathExtension().lastPathComponent, url.pathExtension)
 

@@ -176,7 +176,7 @@ public final class ChatBotsManager {
             var linkedNames: Set<ChatBot.ChatBotId> = Set()
             for url in self.botUrls {
                 do {
-                    let bot = try ChatBot(url: url, baseLanguageCode: self.baseLanguageCode)
+                    let bot = try ChatBot(url: url)
                     guard !bot.isTarget else { continue }
                     tempBots[bot.name] = bot
                     if let nextName = bot.nextBotId {
@@ -260,7 +260,7 @@ public final class ChatBotsManager {
         
         do {
             try fm.copyItem(at: bot.url, to: destinationUrl)
-            let newBot = try ChatBot(url: destinationUrl, baseLanguageCode: self.baseLanguageCode)
+            let newBot = try ChatBot(url: destinationUrl)
             DispatchQueue.main.async {
                 if self.bots.contains(where: { $0 == newBot }) { return }
                 self.bots.append(newBot)
@@ -387,7 +387,7 @@ extension ChatBotsManager {
         var result: [ChatBot] = []
         for url in botUrls {
             do {
-                let bot = try ChatBot(url: url, baseLanguageCode: self.baseLanguageCode)
+                let bot = try ChatBot(url: url)
                 guard isFreeBot(bot) else { continue }
                 result.append(bot)
             } catch {
@@ -408,7 +408,7 @@ extension ChatBotsManager {
         print("BOTS LOCAL URL \(chatBotsUrl)")
         let urls = (try? fm.contentsOfDirectory(at: chatBotsUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
         for url in urls {
-            guard let bot = try? ChatBot(url: url, baseLanguageCode: self.baseLanguageCode), !isFreeBot(bot) else { continue }
+            guard let bot = try? ChatBot(url: url), !isFreeBot(bot) else { continue }
             result.append(bot)
         }
         return result
