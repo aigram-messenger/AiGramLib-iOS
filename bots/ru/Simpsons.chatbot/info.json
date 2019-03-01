@@ -1,0 +1,16 @@
+{
+    "title": "Симпсоны",
+    "name": "simpsons",
+    "shortDescription": "Сатирический мультсериал про жизнь семейства Симпсонов.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "collections",
+        "unisex"
+    ],
+    "price": 138,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

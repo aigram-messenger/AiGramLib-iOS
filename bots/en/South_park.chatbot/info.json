@@ -1,0 +1,17 @@
+{
+    "title": "South Park",
+    "name": "south_park",
+    "shortDescription": "The animated series about the adventures of four boys.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "collections",
+        "unisex"
+    ],
+    "next": "lenin",
+    "price": 138,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}

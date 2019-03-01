@@ -1,0 +1,17 @@
+{
+    "title": "Пушкин",
+    "name": "pushkin",
+    "shortDescription": "Русский поэт, драматург и прозаик.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "great",
+        "men"
+    ],
+    "next": "simpsons",
+    "price": 345,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

@@ -1,0 +1,17 @@
+{
+    "title": "Властелин Колец",
+    "name": "lord_of_the_rings",
+    "shortDescription": "Роман-эпопея английского писателя Дж.Р.Р.Толкина.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "collections",
+        "unisex"
+    ],
+    "next": "south_park",
+    "price": 138,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

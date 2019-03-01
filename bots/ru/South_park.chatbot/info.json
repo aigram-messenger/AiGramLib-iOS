@@ -1,0 +1,17 @@
+{
+    "title": "Южный Парк",
+    "name": "south_park",
+    "shortDescription": "Мультсериал о приключениях четырёх мальчиков.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "collections",
+        "unisex"
+    ],
+    "next": "lenin",
+    "price": 138,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

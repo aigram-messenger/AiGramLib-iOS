@@ -1,0 +1,17 @@
+{
+    "title": "Lenin",
+    "name": "lenin",
+    "shortDescription": "Russian revolutionary, political and statesman.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "great",
+        "men"
+    ],
+    "next": "pushkin",
+    "price": 138,
+    "addDate": "22.01.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}

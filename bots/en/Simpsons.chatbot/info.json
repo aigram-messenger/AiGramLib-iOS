@@ -1,0 +1,16 @@
+{
+    "title": "The Simpsons",
+    "name": "simpsons",
+    "shortDescription": "Satirical animated series about the life of the Simpsons family.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "collections",
+        "unisex"
+    ],
+    "price": 138,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}

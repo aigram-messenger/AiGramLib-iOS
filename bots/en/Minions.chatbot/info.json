@@ -1,0 +1,17 @@
+{
+    "title": "Minions",
+    "name": "minions",
+    "shortDescription": "Little minions of all villains.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "cartoon",
+        "unisex"
+    ],
+    "next": "lord_of_the_rings",
+    "price": 69,
+    "addDate": "01.03.2019",
+    "updateDate": "01.03.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}

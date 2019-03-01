@@ -12,5 +12,6 @@
     "price": 345,
     "addDate": "22.01.2019",
     "updateDate": "15.02.2019",
-    "developer": "AiGram Messenger"
+    "developer": "AiGram Messenger",
+    "lang": "en"
 }
