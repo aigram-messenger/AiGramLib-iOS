@@ -48,6 +48,10 @@ public final class BotsStoreManager: NSObject {
             return
         }
         let id = self.idOfBot(bot)
+        guard !buyCompletions.contains(where: { $0.key == id }) else {
+            print("Product with id \(id) is already processing")
+            return
+        }
         guard let product = self.products.first(where: { $0.productIdentifier == id }) else {
             completion(false)
             return
