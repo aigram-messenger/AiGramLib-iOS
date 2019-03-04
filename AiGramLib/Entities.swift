@@ -147,6 +147,7 @@ public struct ChatBot {
     public var addDate: String { return info.addDate }
     public var updateDate: String { return info.updateDate }
     public var developer: String { return info.developer }
+    public var lang: String { return info.lang }
     
     public let words: [String]
     public let responses: [BotResponse]

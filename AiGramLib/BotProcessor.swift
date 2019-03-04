@@ -137,7 +137,8 @@ extension BotProcessor {
     }
     
     private func initInterpreter() -> ModelInterpreter {
-        let localModelSource = LocalModelSource(modelName: bot.name, path: bot.modelURL.path)
+        let name = "\(bot.name)-\(bot.lang)"
+        let localModelSource = LocalModelSource(modelName: name, path: bot.modelURL.path)
         modelManager.register(localModelSource)
         let options = ModelOptions(cloudModelName: nil, localModelName: localModelSource.modelName)
         let interpreter = ModelInterpreter.modelInterpreter(options: options)
