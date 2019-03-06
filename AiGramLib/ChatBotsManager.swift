@@ -141,6 +141,7 @@ public final class ChatBotsManager {
                 if messages == self.lastMessages {
                     self.lastMessages = nil
                     results = self.resultsWithAssistantHandling(results: results)
+                    results = self.resultsWithHolidaysHandling(results: results)
                     completion(results)
                 }
             }
@@ -148,8 +149,16 @@ public final class ChatBotsManager {
     }
     
     private func resultsWithAssistantHandling(results: [ChatBotResult]) -> [ChatBotResult] {
+        return self.results(results, withHandlingBotName: "assistant")
+    }
+    
+    private func resultsWithHolidaysHandling(results: [ChatBotResult]) -> [ChatBotResult] {
+        return self.results(results, withHandlingBotName: "holidays")
+    }
+    
+    private func results(_ results: [ChatBotResult], withHandlingBotName name: String) -> [ChatBotResult] {
         var results = results
-        if let index = results.firstIndex(where: { $0.bot.name == "assistant" }), index > 0 {
+        if let index = results.firstIndex(where: { $0.bot.name == name }), index > 0 {
             let temp = results.remove(at: index)
             results.insert(temp, at: 0)
         }

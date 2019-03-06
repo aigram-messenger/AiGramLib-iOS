@@ -147,6 +147,8 @@ public protocol AiGramBot {
     
     var typeDesciption: String { get }
     var tagsDescriptions: [String] { get }
+    
+    func toComparable() -> AnyBotComparable
 }
 
 extension AiGramBot {
@@ -213,15 +215,15 @@ public struct HolidaysBot: AiGramBot {
         
         fileprivate init(stringDate: String) throws {
             switch stringDate {
-            case "14.02":
+            case HolidayType.d14_02.rawValue:
                 self = .d14_02
-            case "23.02":
+            case HolidayType.d23_02.rawValue:
                 self = .d23_02
-            case "08.03":
+            case HolidayType.d08_03.rawValue:
                 self = .d08_03
-            case "01.04":
+            case HolidayType.d01_04.rawValue:
                 self = .d01_04
-            case "12_04":
+            case HolidayType.d12_04.rawValue:
                 self = .d12_04
             default:
                 throw Error.indefiendHolidayDate
@@ -230,7 +232,7 @@ public struct HolidaysBot: AiGramBot {
         
         fileprivate func icon(in url: URL) -> UIImage? {
             return UIImage(
-                in: url.appendingPathComponent(rawValue),
+                in: url.appendingPathComponent("icon-\(rawValue)"),
                 name: "icon",
                 ext: "png"
             )
@@ -302,6 +304,10 @@ public struct HolidaysBot: AiGramBot {
         activeHoliday = holidayTypes.first(where: { $0.rawValue == currentTag })
         icon = activeHoliday?.icon(in: url) ?? UIImage()
         preview = UIImage(in: url, name: "preview", ext: "png") ?? UIImage()
+    }
+    
+    public func toComparable() -> AnyBotComparable {
+        return AnyBotComparable(self)
     }
 }
 
@@ -391,6 +397,20 @@ public struct ChatBot: AiGramBot {
         icon = UIImage(in: url, name: "icon", ext: "png") ?? UIImage()
         preview = UIImage(in: url, name: "preview", ext: "png") ?? UIImage()
     }
+    
+    public func toComparable() -> AnyBotComparable {
+        return AnyBotComparable(self)
+    }
+}
+
+extension ChatBot: Comparable {
+    public static func == (lhs: ChatBot, rhs: ChatBot) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
+    public static func < (lhs: ChatBot, rhs: ChatBot) -> Bool {
+        return lhs.index < rhs.index
+    }
 }
 
 public struct ChatBotResult {
@@ -402,5 +422,34 @@ extension ChatBotResult: Equatable {
     public static func == (lhs: ChatBotResult, rhs: ChatBotResult) -> Bool {
         return lhs.bot.isEqual(rhs.bot) &&
             lhs.responses == rhs.responses
+    }
+}
+
+extension Comparable { typealias ComparableSelf = Self }
+public struct AnyBotComparable: Comparable {
+    public let value: AiGramBot
+    let isEqual: (AnyBotComparable) -> Bool
+    let isLess: (AnyBotComparable) -> Bool
+    init<T: Comparable>(_ value: T) where T: AiGramBot {
+        self.value = value
+        self.isEqual = { rhs in
+            guard let other = rhs.value as? T.ComparableSelf else {
+                return false
+            }
+            return value == other
+        }
+        self.isLess = { rhs in
+            guard let other = rhs.value as? T.ComparableSelf else {
+                return false
+            }
+            return value < other
+        }
+    }
+    
+    public static func < (lhs: AnyBotComparable, rhs: AnyBotComparable) -> Bool {
+        return lhs.isLess(rhs)
+    }
+    public static func == (lhs: AnyBotComparable, rhs: AnyBotComparable) -> Bool {
+        return lhs.isEqual(rhs)
     }
 }
