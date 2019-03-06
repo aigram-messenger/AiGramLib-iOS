@@ -18,15 +18,15 @@ public enum Result<T> {
 
 public final class ChatBotsManager {
     public static let shared: ChatBotsManager = .init()
-    private(set) public var bots: [ChatBot] = []
+    private(set) public var bots: [AiGramBot] = []
     private var loadedBotsFlag: Bool = false
-    private(set) public var loadedBotsInStore: [ChatBot] = []
+    private(set) public var loadedBotsInStore: [AiGramBot] = []
     private var queue: OperationQueue
     private var searchQueue: OperationQueue
     private var lastMessages: [String]?
     private var lastSearchText: String?
     private var storeBotsLoadingStarted: Bool = false
-    private var storeBotsLoadingCompletions: [(Result<[ChatBot]>) -> Void] = []
+    private var storeBotsLoadingCompletions: [(Result<[AiGramBot]>) -> Void] = []
     private let session = URLSession(configuration: .default)
     private var baseLanguageCode: String = ""
     
@@ -65,13 +65,14 @@ public final class ChatBotsManager {
     private var botUrls: [URL] {
         let bundle = Bundle(for: ChatBotsManager.self)
         return bundle.urls(
-            forResourcesWithExtension: ChatBot.botExtension,
+            // TODO: Возможно нужно будет использовать разные расширения для разных типов ботов в дальнейшем
+            forResourcesWithExtension: "chatbot",
             subdirectory: "bots/\(self.baseLanguageCode)"
             ) ?? []
     }
     
     private lazy var functions = Functions.functions()
-    private var botsDetailsFromBack: [ChatBot.ChatBotId: ChatBotBackDetails] = [:]
+    private var botsDetailsFromBack: [AiGramBot.ChatBotId: ChatBotBackDetails] = [:]
     
     private init() {
         FirebaseApp.configure()
@@ -96,7 +97,7 @@ public final class ChatBotsManager {
         self.bots = free + local
     }
     
-    public func botDetails(_ bot: ChatBot) -> ChatBotBackDetails {
+    public func botDetails(_ bot: AiGramBot) -> ChatBotBackDetails {
         var details: ChatBotBackDetails
         
         if let temp = self.botsDetailsFromBack[bot.name] {
@@ -156,7 +157,7 @@ public final class ChatBotsManager {
         return results
     }
     
-    public func botsInStore(completion: @escaping (Result<[ChatBot]>) -> Void) {
+    public func botsInStore(completion: @escaping (Result<[AiGramBot]>) -> Void) {
         guard !baseLanguageCode.isEmpty else {
             print("Please, set language code before")
             return
@@ -171,12 +172,12 @@ public final class ChatBotsManager {
         DispatchQueue.global().asyncAfter(deadline: .now()) { [weak self] in
             guard let self = self else { return }
             
-            var result: [ChatBot] = []
-            var tempBots: [ChatBot.ChatBotId: ChatBot] = [:]
-            var linkedNames: Set<ChatBot.ChatBotId> = Set()
+            var result: [AiGramBot] = []
+            var tempBots: [AiGramBot.ChatBotId: AiGramBot] = [:]
+            var linkedNames: Set<AiGramBot.ChatBotId> = Set()
             for url in self.botUrls {
                 do {
-                    let bot = try ChatBot(url: url)
+                    let bot = try BotFactory.createBot(with: url)
                     guard !bot.isTarget else { continue }
                     tempBots[bot.name] = bot
                     if let nextName = bot.nextBotId {
@@ -214,7 +215,7 @@ public final class ChatBotsManager {
         }
     }
     
-    public func search(_ text: String, completion: @escaping ([ChatBot]) -> Void) {
+    public func search(_ text: String, completion: @escaping ([AiGramBot]) -> Void) {
         if self.lastSearchText != text {
             self.lastSearchText = nil
             self.searchQueue.cancelAllOperations()
@@ -222,7 +223,7 @@ public final class ChatBotsManager {
         self.lastSearchText = text
         let block = BlockOperation { [unowned self, text] in
             guard self.lastSearchText == text else { return }
-            let result: [ChatBot] = self.bots.filter { $0.isAcceptedWithText(text) }
+            let result: [AiGramBot] = self.bots.filter { $0.isAcceptedWithText(text) }
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -241,7 +242,7 @@ public final class ChatBotsManager {
         return destinationUrl
     }
     
-    public func copyBot(_ bot: ChatBot) -> Bool {
+    public func copyBot(_ bot: AiGramBot) -> Bool {
         guard !isFreeBot(bot) else { return true }
         let fm = FileManager.default
         guard var destinationUrl = localBotsRepo else { return false }
@@ -253,16 +254,16 @@ public final class ChatBotsManager {
                 return false
             }
         }
-        destinationUrl.appendPathComponent("\(bot.fileNameComponents.0).\(bot.fileNameComponents.1)", isDirectory: true)
+        destinationUrl.appendPathComponent(bot.fileNameComponents.fileName, isDirectory: true)
         if ((try? destinationUrl.checkResourceIsReachable()) ?? false) {
             try? fm.removeItem(at: destinationUrl)
         }
         
         do {
             try fm.copyItem(at: bot.url, to: destinationUrl)
-            let newBot = try ChatBot(url: destinationUrl)
+            let newBot = try BotFactory.createBot(with: destinationUrl)
             DispatchQueue.main.async {
-                if self.bots.contains(where: { $0 == newBot }) { return }
+                if self.bots.contains(where: { $0.isEqual(newBot) }) { return }
                 self.bots.append(newBot)
             }
         } catch {
@@ -272,7 +273,7 @@ public final class ChatBotsManager {
         return true
     }
     
-//    public func deleteBot(_ bot: ChatBot) {
+//    public func deleteBot(_ bot: AiGramBot) {
 //        let fm = FileManager.default
 //        guard var botUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
 //        botUrl.appendPathComponent("chatbots", isDirectory: true)
@@ -280,16 +281,16 @@ public final class ChatBotsManager {
 //        try? fm.removeItem(at: botUrl)
 //    }
     
-    public func enableBot(_ bot: ChatBot, enabled: Bool, userId: Int32, completion: @escaping () -> Void) {
-        var botEnableStates: [ChatBot.ChatBotId: Bool] = (UserDefaults.standard.value(forKey: "EnabledBots") as? [ChatBot.ChatBotId: Bool]) ?? [:]
+    public func enableBot(_ bot: AiGramBot, enabled: Bool, userId: Int32, completion: @escaping () -> Void) {
+        var botEnableStates: [AiGramBot.ChatBotId: Bool] = (UserDefaults.standard.value(forKey: "EnabledBots") as? [AiGramBot.ChatBotId: Bool]) ?? [:]
         botEnableStates[bot.name] = enabled
         UserDefaults.standard.setValue(botEnableStates, forKey: "EnabledBots")
         UserDefaults.standard.synchronize()
         self.sendEnablingBot(bot, enabled: enabled, userId: userId, completion: completion)
     }
     
-    public func isBotEnabled(_ bot: ChatBot) -> Bool {
-        let botEnableStates: [ChatBot.ChatBotId: Bool] = (UserDefaults.standard.value(forKey: "EnabledBots") as? [ChatBot.ChatBotId: Bool]) ?? [:]
+    public func isBotEnabled(_ bot: AiGramBot) -> Bool {
+        let botEnableStates: [AiGramBot.ChatBotId: Bool] = (UserDefaults.standard.value(forKey: "EnabledBots") as? [AiGramBot.ChatBotId: Bool]) ?? [:]
         return botEnableStates[bot.name] ?? true
     }
     
@@ -310,7 +311,7 @@ public final class ChatBotsManager {
         }.resume()
     }
     
-    public func rateBot(_ bot: ChatBot, rating: Int, userId: Int32, completion: @escaping (Error?) -> Void) {
+    public func rateBot(_ bot: AiGramBot, rating: Int, userId: Int32, completion: @escaping (Error?) -> Void) {
         let url: URL! = URL(string: "https://us-central1-api-7231730271161646241-853730.cloudfunctions.net/voteBot?user_id=\(userId)&bot_id=\(bot.name)&rating=\(rating)")
         self.session.dataTask(with: url) { [weak self] (_, _, error) in
             if let error = error {
@@ -328,7 +329,7 @@ public final class ChatBotsManager {
         }.resume()
     }
     
-    func sendEnablingBot(_ bot: ChatBot, enabled: Bool, userId: Int32, completion: @escaping (() -> Void)) {
+    func sendEnablingBot(_ bot: AiGramBot, enabled: Bool, userId: Int32, completion: @escaping (() -> Void)) {
         let type = enabled ? 1 : 2
         let url: URL! = URL(string: "https://us-central1-api-7231730271161646241-853730.cloudfunctions.net/installDeleteBot?bot_id=\(bot.name)&type=\(type)&user_id=\(userId)")
         self.session.dataTask(with: url) { [weak self] (data, response, error) in
@@ -348,7 +349,7 @@ public final class ChatBotsManager {
         }.resume()
     }
     
-    public func isBotRatedBy(_ userId: Int32, bot: ChatBot, completion: @escaping (ChatBotDetailsRated?) -> Void) {
+    public func isBotRatedBy(_ userId: Int32, bot: AiGramBot, completion: @escaping (ChatBotDetailsRated?) -> Void) {
         let url: URL! = URL(string: "https://us-central1-api-7231730271161646241-853730.cloudfunctions.net/getBotVoting?user_id=\(userId)&bot_id=\(bot.name)")
         self.session.dataTask(with: url) { (data, response, error) in
             print("\(error) \(data) \(response)")
@@ -370,7 +371,7 @@ public final class ChatBotsManager {
 }
 
 extension ChatBotsManager {
-    private var targetBot: ChatBot? {
+    private var targetBot: AiGramBot? {
         //TODO: not implemented
         return nil
     }
@@ -379,15 +380,15 @@ extension ChatBotsManager {
         let payload: [T]
     }
     
-    private func freeBots() -> [ChatBot] {
+    private func freeBots() -> [AiGramBot] {
         guard !baseLanguageCode.isEmpty else {
             print("Please, set language code before")
             return []
         }
-        var result: [ChatBot] = []
+        var result: [AiGramBot] = []
         for url in botUrls {
             do {
-                let bot = try ChatBot(url: url)
+                let bot = try BotFactory.createBot(with: url)
                 guard isFreeBot(bot) else { continue }
                 result.append(bot)
             } catch {
@@ -397,10 +398,10 @@ extension ChatBotsManager {
         return result
     }
     
-    private func localBots() -> [ChatBot] {
+    private func localBots() -> [AiGramBot] {
         let fm = FileManager.default
         guard let chatBotsUrl = localBotsRepo else { return [] }
-        var result: [ChatBot] = []
+        var result: [AiGramBot] = []
         if !((try? chatBotsUrl.checkResourceIsReachable()) ?? false) {
             try? fm.createDirectory(at: chatBotsUrl, withIntermediateDirectories: true, attributes: nil)
         }
@@ -408,22 +409,21 @@ extension ChatBotsManager {
         print("BOTS LOCAL URL \(chatBotsUrl)")
         let urls = (try? fm.contentsOfDirectory(at: chatBotsUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
         for url in urls {
-            guard let bot = try? ChatBot(url: url), !isFreeBot(bot) else { continue }
+            guard let bot = try? BotFactory.createBot(with: url), !isFreeBot(bot) else { continue }
             result.append(bot)
         }
         return result
     }
     
-    private func isFreeBot(_ bot: ChatBot) -> Bool {
-        return bot.tags.contains(ChatBotTag.free.localizedDescription(baseLanguageCode))
+    private func isFreeBot(_ bot: AiGramBot) -> Bool {
+        return bot.tags.contains(.free)
     }
     
-    private func getTreshovieBots(success: @escaping ([ChatBot.ChatBotId: ChatBotBackDetails]) -> Void) {
+    private func getTreshovieBots(success: @escaping ([AiGramBot.ChatBotId: ChatBotBackDetails]) -> Void) {
         let url: URL! = URL(string: "https://us-central1-api-7231730271161646241-853730.cloudfunctions.net/getBotsInfo")
         let dataTask = self.session.dataTask(with: url) { [weak self] (data, response, error) in
-            print("\(error)")
             guard let self = self else { return }
-            var result: [ChatBot.ChatBotId: ChatBotBackDetails] = [:]
+            var result: [AiGramBot.ChatBotId: ChatBotBackDetails] = [:]
             var error = error
             if let data = data {
                 let decoder = JSONDecoder()

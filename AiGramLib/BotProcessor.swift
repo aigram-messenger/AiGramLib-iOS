@@ -10,6 +10,8 @@ import Foundation
 import FirebaseCore
 import FirebaseMLModelInterpreter
 
+// MARK:
+
 private class InterpreterOperation: Operation {
     private let interpreter: ModelInterpreter
     private let lock: NSCondition = .init()
@@ -85,38 +87,48 @@ private class InterpreterOperation: Operation {
     }
 }
 
+// MARK:
+
 public final class BotProcessor {
-    public let bot: ChatBot
+    public let bot: AiGramBot
     private let modelManager: ModelManager = .modelManager()
     
-    public init(bot: ChatBot) {
+    public init(bot: AiGramBot) {
         self.bot = bot
-    }
-    
-    deinit {
     }
 }
 
 extension BotProcessor {
     /// Synchronous call
     public func process(messages: [String]) -> ChatBotResult {
-        var operations: [Operation] = []
-        let queue = OperationQueue()
-        let lock = NSRecursiveLock()
         var responses: [BotResponse] = []
-        let interpreter = initInterpreter()
-        for message in messages {
-            let words = self.words(of: message)
-            
-            let operation = InterpreterOperation(wordsToProcess: words, interpreter: interpreter, bot: bot)
-            operation.completion = { results in
-                lock.lock()
-                responses.append(contentsOf: results)
-                lock.unlock()
+        
+        if let bot = self.bot as? ChatBot {
+            var operations: [Operation] = []
+            let queue = OperationQueue()
+            let lock = NSRecursiveLock()
+            let interpreter = initInterpreter(for: bot)
+            for message in messages {
+                let words = self.words(of: message)
+                
+                let operation = InterpreterOperation(wordsToProcess: words, interpreter: interpreter, bot: bot)
+                operation.completion = { results in
+                    lock.lock()
+                    responses.append(contentsOf: results)
+                    lock.unlock()
+                }
+                operations.append(operation)
             }
-            operations.append(operation)
+            queue.addOperations(operations, waitUntilFinished: true)
+        } else if let holiday = self.bot as? HolidaysBot, let activeHoliday = holiday.activeHoliday {
+            if let result = holiday.responses.first(where: { $0.tag == activeHoliday.rawValue }) {
+                responses.append(result)
+            }
+        } else {
+            fatalError("Undefiend type of bot")
         }
-        queue.addOperations(operations, waitUntilFinished: true)
+        
+
         let botResult = ChatBotResult(bot: self.bot, responses: responses)
         return botResult
     }
@@ -136,7 +148,7 @@ extension BotProcessor {
         return words
     }
     
-    private func initInterpreter() -> ModelInterpreter {
+    private func initInterpreter(for bot: ChatBot) -> ModelInterpreter {
         let name = "\(bot.name)-\(bot.lang)"
         let localModelSource = LocalModelSource(modelName: name, path: bot.modelURL.path)
         modelManager.register(localModelSource)

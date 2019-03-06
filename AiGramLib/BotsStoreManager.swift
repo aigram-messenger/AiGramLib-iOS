@@ -26,7 +26,7 @@ public final class BotsStoreManager: NSObject {
         SKPaymentQueue.default().add(self)
     }
     
-    public func loadProducts(for bots: [ChatBot], _ completion: @escaping () -> Void) {
+    public func loadProducts(for bots: [AiGramBot], _ completion: @escaping () -> Void) {
         self.productsCompletion = { [weak self] in
             completion()
             self?.productsCompletion = nil
@@ -42,7 +42,7 @@ public final class BotsStoreManager: NSObject {
         request.start()
     }
     
-    public func buyBot(_ bot: ChatBot, completion: @escaping (Bool) -> Void) {
+    public func buyBot(_ bot: AiGramBot, completion: @escaping (Bool) -> Void) {
         if isBotBought(bot) {
             completion(true)
             return
@@ -62,17 +62,17 @@ public final class BotsStoreManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
     
-    public func isBotBought(_ bot: ChatBot) -> Bool {
+    public func isBotBought(_ bot: AiGramBot) -> Bool {
         return bot.isLocal
     }
     
-    public func botPrice(bot: ChatBot) -> Float {
+    public func botPrice(bot: AiGramBot) -> Float {
         let id = self.idOfBot(bot)
         guard let product = self.products.first(where: { $0.productIdentifier == id }) else { return 0 }
         return Float(truncating: product.price)
     }
     
-    public func botPriceString(bot: ChatBot, defaultValue: String = "ПОЛУЧИТЬ") -> String {
+    public func botPriceString(bot: AiGramBot, defaultValue: String = "ПОЛУЧИТЬ") -> String {
         let id = self.idOfBot(bot)
         guard let product = self.products.first(where: { $0.productIdentifier == id }) else { return defaultValue }
         let formatter = NumberFormatter()
@@ -129,19 +129,19 @@ extension BotsStoreManager: SKProductsRequestDelegate {
 }
 
 extension BotsStoreManager {
-    private static let namesMap: [ChatBot.ChatBotId: String] = [
+    private static let namesMap: [AiGramBot.ChatBotId: String] = [
         "celentano": "Celentano",
         "lannister": "tyrion",
         "spongebob": "sponge_bob"
     ]
     
-    private static let idsMap: [String: ChatBot.ChatBotId] = [
+    private static let idsMap: [String: AiGramBot.ChatBotId] = [
         "Celentano": "celentano",
         "tyrion": "lannister",
         "sponge_bob": "spongebob"
     ]
     
-    private func idOfBot(_ bot: ChatBot) -> String {
+    private func idOfBot(_ bot: AiGramBot) -> String {
         let name = BotsStoreManager.namesMap[bot.name] ?? bot.name
         let result: String = self.prefix + name
         return result
