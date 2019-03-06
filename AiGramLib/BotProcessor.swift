@@ -122,12 +122,13 @@ extension BotProcessor {
             queue.addOperations(operations, waitUntilFinished: true)
         } else if let holiday = self.bot as? HolidaysBot, let activeHoliday = holiday.activeHoliday {
             if let result = holiday.responses.first(where: { $0.tag == activeHoliday.rawValue }) {
-                responses.append(result)
+                let tag = result.tag
+                let holidayResponses = result.response.map { BotResponse(response: [$0], tag: tag) }
+                responses.append(contentsOf: holidayResponses)
             }
         } else {
             fatalError("Undefiend type of bot")
         }
-        
 
         let botResult = ChatBotResult(bot: self.bot, responses: responses)
         return botResult
