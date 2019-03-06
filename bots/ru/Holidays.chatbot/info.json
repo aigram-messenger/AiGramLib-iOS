@@ -1,0 +1,17 @@
+{
+    "title": "Праздники",
+    "name": "holidays",
+    "shortDescription": "Праздники России. Нейробот активируется в даты праздников.",
+    "type": "notifier",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "churchill",
+    "price": 0,
+    "addDate": "22.02.2019",
+    "updateDate": "22.02.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}
