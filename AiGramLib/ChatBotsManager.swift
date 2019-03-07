@@ -38,12 +38,16 @@ public final class ChatBotsManager {
             
             if self.baseLanguageCode != code {
                 self.baseLanguageCode = code == "ru" || code == "en" ? code : "ru"
-                self.loadedBotsFlag = false
-                self.storeBotsLoadingStarted = false
-                self.botsInStore(completion: { _ in })
-                self.setFreeAndLocalBots()
+                self.reloadBots()
             }
         }
+    }
+    
+    private func reloadBots() {
+        self.loadedBotsFlag = false
+        self.storeBotsLoadingStarted = false
+        self.botsInStore(completion: { _ in })
+        self.setFreeAndLocalBots()
     }
     
     public var autoOpenBots: Bool {
@@ -85,6 +89,15 @@ public final class ChatBotsManager {
             self.botsDetailsFromBack = result
         }
         
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.significantTimeChangeNotification,
+            object: nil,
+            queue: queue,
+            using: { [weak self] _ in
+                self?.checkOldBotCongratulations()
+                self?.reloadBots()
+            }
+        )
 //        let temp = bots
 //        for bot in temp {
 //            deleteBot(bot)
@@ -116,7 +129,60 @@ public final class ChatBotsManager {
         return details
     }
     
-    public func handleMessages(_ messages: [String], completion: @escaping ([ChatBotResult]) -> Void) {
+    public typealias UniquePeerId = Int64
+    private let congratulationKey: String = "congratulation-"
+    
+    private func createCongKey(for peerId: UniquePeerId) -> String {
+        return "\(congratulationKey)\(peerId)"
+    }
+    
+    public func checkOldBotCongratulations() {
+        let currentDate = Date()
+        UserDefaults.standard.dictionaryRepresentation()
+            .filter { $0.key.contains(congratulationKey) }
+            .filter { ($0.value as? Date) != currentDate }
+            .forEach {
+                print("Congratulation mark will be removed. \($0.key)")
+                UserDefaults.standard.removeObject(forKey: $0.key)
+        }
+    }
+    
+    public func markAsCongratulatedPeer(at id: UniquePeerId) {
+        UserDefaults.standard.set(
+            Date(),
+            forKey: createCongKey(for: id)
+        )
+    }
+    
+    public func isHolidaysBot(_ id: AiGramBot.ChatBotId) -> Bool {
+        return id == "holidays"
+    }
+    
+    private func canUserSendCongratulations(_ peerId: UniquePeerId) -> Bool {
+        let userDefaults = UserDefaults.standard
+        let key = createCongKey(for: peerId)
+        guard
+            let congDate = userDefaults.value(forKey: key) as? Date
+        else {
+            return true
+        }
+        
+        let calendar = Calendar.current
+        let congratulationStartOfDay = calendar.startOfDay(for: congDate)
+        let currentStartOfDate = calendar.startOfDay(for: Date())
+        if congratulationStartOfDay != currentStartOfDate {
+            userDefaults.removeObject(forKey: key)
+            return true
+        }
+        
+        return false
+    }
+    
+    public func handleMessages(
+        _ messages: [String],
+        of peerId: UniquePeerId?,
+        completion: @escaping ([ChatBotResult]) -> Void
+    ) {
         lastMessages = messages
         queue.addOperation {
             let localQueue = OperationQueue()
@@ -125,6 +191,10 @@ public final class ChatBotsManager {
             
             for bot in self.bots {
                 guard self.isBotEnabled(bot) else { continue }
+                if bot is HolidaysBot && peerId != nil && !self.canUserSendCongratulations(peerId!) {
+                    continue
+                }
+                
                 localQueue.addOperation {
                     let processor = BotProcessor(bot: bot)
                     let result = processor.process(messages: messages)

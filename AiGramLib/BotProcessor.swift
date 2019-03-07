@@ -126,8 +126,6 @@ extension BotProcessor {
                 let holidayResponses = result.response.map { BotResponse(response: [$0], tag: tag) }
                 responses.append(contentsOf: holidayResponses)
             }
-        } else {
-            fatalError("Undefiend type of bot")
         }
 
         let botResult = ChatBotResult(bot: self.bot, responses: responses)
