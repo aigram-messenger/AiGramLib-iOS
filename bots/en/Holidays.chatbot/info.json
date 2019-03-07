@@ -1,0 +1,17 @@
+{
+    "title": "Holidays",
+    "name": "holidays",
+    "shortDescription": "Holidays of Russia. Neurobot is activated on holiday dates.",
+    "type": "notifier",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "confucius",
+    "price": 0,
+    "addDate": "22.02.2019",
+    "updateDate": "22.02.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}
