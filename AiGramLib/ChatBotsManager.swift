@@ -282,14 +282,20 @@ public final class ChatBotsManager {
             }
             
             BotsStoreManager.shared.loadProducts(for: result) { [weak self] in
-                DispatchQueue.main.async {
-                    self?.loadedBotsInStore = result
-                    self?.loadedBotsFlag = true
-                    self?.storeBotsLoadingCompletions.forEach({ (block) in
-                        block(.success(result))
-                    })
-                    self?.storeBotsLoadingCompletions.removeAll()
+                switch $0 {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.loadedBotsInStore = result
+                        self?.loadedBotsFlag = true
+                        self?.storeBotsLoadingCompletions.forEach({ (block) in
+                            block(.success(result))
+                        })
+                        self?.storeBotsLoadingCompletions.removeAll()
+                    }
+                case .fail:
+                    self?.storeBotsLoadingStarted = false
                 }
+                
             }
         }
     }

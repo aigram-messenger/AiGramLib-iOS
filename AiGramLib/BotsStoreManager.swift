@@ -15,7 +15,7 @@ public final class BotsStoreManager: NSObject {
     private let prefix = "com.olcorporation.olai.bot."
     private var productsRequest: SKProductsRequest?
     private(set) public var products: [SKProduct] = []
-    private var productsCompletion: (() -> Void)?
+    private var result: ((Result<Void>) -> Void)?
     private var buyCompletions: [String: (Bool) -> Void] = [:]
     
     public var userId: Int32!
@@ -26,10 +26,10 @@ public final class BotsStoreManager: NSObject {
         SKPaymentQueue.default().add(self)
     }
     
-    public func loadProducts(for bots: [AiGramBot], _ completion: @escaping () -> Void) {
-        self.productsCompletion = { [weak self] in
-            completion()
-            self?.productsCompletion = nil
+    public func loadProducts(for bots: [AiGramBot], result: @escaping (Result<Void>) -> Void) {
+        self.result = { [weak self] in
+            result($0)
+            self?.result = nil
         }
         
         var productIds: [String] = []
@@ -124,7 +124,11 @@ extension BotsStoreManager: SKPaymentTransactionObserver {
 extension BotsStoreManager: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         self.products = response.products
-        self.productsCompletion?()
+        self.result?(.success(()))
+    }
+    
+    public func request(_ request: SKRequest, didFailWithError error: Error) {
+        self.result?(.fail(error))
     }
 }
 
