@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F5B05A0E224890C40039B67F /* PopularSuggestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B05A0D224890C40039B67F /* PopularSuggestionManager.swift */; };
 		F7173BBC221D5D740029D97C /* ChatBotsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB7221D5D730029D97C /* ChatBotsManager.swift */; };
 		F7173BBD221D5D740029D97C /* BotsStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB8221D5D730029D97C /* BotsStoreManager.swift */; };
 		F7173BBE221D5D740029D97C /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7173BB9221D5D740029D97C /* Entities.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F5B05A0D224890C40039B67F /* PopularSuggestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSuggestionManager.swift; sourceTree = "<group>"; };
 		F7173BA9221D3DFE0029D97C /* AiGramLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AiGramLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7173BAD221D3DFE0029D97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7173BB7221D5D730029D97C /* ChatBotsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBotsManager.swift; sourceTree = "<group>"; };
@@ -95,8 +97,9 @@
 				F7173BB8221D5D730029D97C /* BotsStoreManager.swift */,
 				F7173BB7221D5D730029D97C /* ChatBotsManager.swift */,
 				F7173BB9221D5D740029D97C /* Entities.swift */,
-				F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */,
 				F7173BAD221D3DFE0029D97C /* Info.plist */,
+				F5B05A0D224890C40039B67F /* PopularSuggestionManager.swift */,
+				F7173BBB221D5D740029D97C /* UIImage+Sizes.swift */,
 			);
 			path = AiGramLib;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				F7173BBE221D5D740029D97C /* Entities.swift in Sources */,
 				F7173BBC221D5D740029D97C /* ChatBotsManager.swift in Sources */,
 				F7173BBF221D5D740029D97C /* BotProcessor.swift in Sources */,
+				F5B05A0E224890C40039B67F /* PopularSuggestionManager.swift in Sources */,
 				F7173BBD221D5D740029D97C /* BotsStoreManager.swift in Sources */,
 				F7173BC0221D5D740029D97C /* UIImage+Sizes.swift in Sources */,
 			);

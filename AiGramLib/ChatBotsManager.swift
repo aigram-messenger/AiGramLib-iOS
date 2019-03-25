@@ -29,6 +29,12 @@ public final class ChatBotsManager {
     private var storeBotsLoadingCompletions: [(Result<[AiGramBot]>) -> Void] = []
     private let session = URLSession(configuration: .default)
     private var baseLanguageCode: String = ""
+    private let popularSuggestionsManager: PopularSuggestionManager = {
+        let manager = PopularSuggestionManager()
+        manager.restoreSuggestions()
+        
+        return manager
+    }()
     
     public func updateLanguageCodeAndLoadBots(_ code: String) {
         queue.addOperation { [weak self] in
@@ -158,6 +164,10 @@ public final class ChatBotsManager {
         return id == "holidays"
     }
     
+    public func use(suggestion: String, tag: String, of botId: AiGramBot.ChatBotId) {
+        popularSuggestionsManager.use(suggestion: suggestion, tag: tag, of: botId)
+    }
+    
     private func canUserSendCongratulations(_ peerId: UniquePeerId) -> Bool {
         let userDefaults = UserDefaults.standard
         let key = createCongKey(for: peerId)
@@ -184,7 +194,9 @@ public final class ChatBotsManager {
         completion: @escaping ([ChatBotResult]) -> Void
     ) {
         lastMessages = messages
-        queue.addOperation {
+        queue.addOperation { [weak self] in
+            guard let self = self else { return }
+            
             let localQueue = OperationQueue()
             let lock = NSRecursiveLock()
             var results: [ChatBotResult] = []
@@ -207,11 +219,20 @@ public final class ChatBotsManager {
             }
             
             localQueue.waitUntilAllOperationsAreFinished()
+            
+            results = self.resultsWithAssistantHandling(results: results)
+            results = self.resultsWithHolidaysHandling(results: results)
+            self.popularSuggestionsManager.getMostPopularBotsMessages(self.bots).map {
+                let popular = ChatBotResult(
+                    bot: PopularSuggestionsBot(),
+                    responses: $0.map { BotResponse(response: [$0], tag: "") }
+                )
+                results.insert(popular, at: 0)
+            }
+            
             DispatchQueue.main.async {
                 if messages == self.lastMessages {
                     self.lastMessages = nil
-                    results = self.resultsWithAssistantHandling(results: results)
-                    results = self.resultsWithHolidaysHandling(results: results)
                     completion(results)
                 }
             }

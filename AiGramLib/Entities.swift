@@ -37,6 +37,7 @@ let TargetBotName: String = "target"
 public enum ChatBotType: String, Codable, CustomStringConvertible {
     case bot
     case notifier
+    case recent
     
     public var description: String {
         return "NeuroBot"
@@ -194,6 +195,8 @@ final class BotFactory {
             return try ChatBot(url: url, info: info, decoder: decoder)
         case .notifier:
             return try HolidaysBot(url: url, info: info, decoder: decoder)
+        case .recent:
+            fatalError("Cannot create bot with type `recent`")
         }
     }
     
@@ -414,6 +417,44 @@ extension ChatBot: Comparable {
     }
 }
 
+struct PopularSuggestionsBot: AiGramBot {
+    var addDate: String = ""
+    var developer: String = ""
+    var fileNameComponents: BotFileComponents = .init(name: "", extension: "")
+    var fullDescription: String = ""
+    var id: Int = -1
+    var isTarget: Bool = false
+    var index: Int = -1
+    var isLocal: Bool = true
+    var name: ChatBotId = ""
+    var nextBotId: ChatBotId?
+    var price: Int = 0
+    var shortDescription: String = ""
+    var tags: [ChatBotTag] = []
+    var title: String = ""
+    var type: ChatBotType = .recent
+    var updateDate: String = ""
+    var url: URL = URL(fileURLWithPath: "")
+    var preview: UIImage = .init()
+    let icon: UIImage = .init()
+    var lang: String = ""
+    var responses: [BotResponse] = []
+    
+    func toComparable() -> AnyBotComparable {
+        return AnyBotComparable(self)
+    }
+}
+
+extension PopularSuggestionsBot: Comparable {
+    public static func == (lhs: PopularSuggestionsBot, rhs: PopularSuggestionsBot) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
+    public static func < (lhs: PopularSuggestionsBot, rhs: PopularSuggestionsBot) -> Bool {
+        return lhs.index < rhs.index
+    }
+}
+
 public struct ChatBotResult {
     public let bot: AiGramBot
     public let responses: [BotResponse]
@@ -454,153 +495,3 @@ public struct AnyBotComparable: Comparable {
         return lhs.isEqual(rhs)
     }
 }
-
-
-
-////
-
-// Work
-
-typealias BotId = String
-
-struct Bot: Equatable {
-    let name: BotId
-    var id: Int {
-        return name.hashValue
-    }
-    var responses: [String] {
-        return ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"].map { $0 + "-\(self.name)" }
-    }
-    
-    init(name: String) {
-        self.name = name
-    }
-}
-
-struct BotResult {
-    let bot: Bot
-    let suggestions: [String]
-}
-
-// Recent usage
-
-struct PopularSuggestionWeight: Codable {
-    let suggestionHash: Int
-    var weight: Int
-    
-    mutating func increaseWeight() {
-        weight += 1
-    }
-    
-    static func new(suggestion: String) -> PopularSuggestionWeight {
-        return .init(suggestionHash: suggestion.hashValue, weight: 1)
-    }
-}
-
-struct PopularBotSuggestions: Codable {
-    let botId: BotId
-    var recent: [PopularSuggestionWeight]
-    var mostPopular: PopularSuggestionWeight {
-        return recent.max { $0.weight < $1.weight }!
-    }
-    
-    init(botId: BotId, suggestion: String) {
-        self.botId = botId
-        let recentSuggestion = PopularSuggestionWeight.new(suggestion: suggestion)
-        recent = [recentSuggestion]
-    }
-    
-    mutating func addSuggestion(_ suggestion: String) {
-        let hash = suggestion.hashValue
-        if let indexOfExitstingSuggestion = recent.firstIndex(where: { $0.suggestionHash == hash }) {
-            var existingSuggestion = recent[indexOfExitstingSuggestion]
-            existingSuggestion.increaseWeight()
-            recent[indexOfExitstingSuggestion] = existingSuggestion
-        } else {
-            recent.append(
-                PopularSuggestionWeight.new(suggestion: suggestion)
-            )
-        }
-    }
-}
-
-struct PopularSuggestionManager {
-    var popularSuggestions: [PopularBotSuggestions]
-    private let saveQueue: DispatchQueue = .init(label: "com.save.bot.suggestion")
-    
-    init(popularSuggestions: [PopularBotSuggestions] = []) {
-        self.popularSuggestions = popularSuggestions
-    }
-    
-    mutating func use(suggestion: String, of bot: Bot) {
-        guard let botSuggestion = bot.responses.first(where: { $0 == suggestion }) else {
-            fatalError("Bot does not have that suggestion")
-        }
-        if let indexOfExitstingBot = popularSuggestions.firstIndex(where: { $0.botId == bot.name }) {
-            var existingSuggestion = popularSuggestions[indexOfExitstingBot]
-            existingSuggestion.addSuggestion(botSuggestion)
-            popularSuggestions[indexOfExitstingBot] = existingSuggestion
-        } else {
-            popularSuggestions.append(
-                PopularBotSuggestions(botId: bot.name, suggestion: botSuggestion)
-            )
-        }
-        
-        save()
-    }
-    
-    private func save() {
-        saveQueue.async {
-            let data = try! JSONEncoder().encode(self.popularSuggestions)
-            UserDefaults.standard.set(data, forKey: "suggestions")
-        }
-    }
-    
-    static func restoreSuggestions() -> [PopularBotSuggestions]? {
-        guard let data = UserDefaults.standard.data(forKey: "suggestions") else {
-            return nil
-        }
-        return try? JSONDecoder().decode([PopularBotSuggestions].self, from: data)
-    }
-    
-    func getMostPopularBotsMessages(_ bots: inout [AiGramBot]) -> [String] {
-        guard
-            !popularSuggestions.isEmpty,
-            !bots.isEmpty
-        else {
-            return []
-        }
-        
-        return bots
-            .filter { bot in
-                return popularSuggestions.contains(where: { $0.botId == bot.name })
-            }
-            .flatMap { bot in
-                bot.responses.flatMap { $0.response }
-            }
-            .filter { response in
-                return popularSuggestions.contains(where: { $0.mostPopular.suggestionHash == response.hashValue })
-            }
-    }
-}
-
-// Usage
-
-let sug = PopularSuggestionManager.restoreSuggestions()
-var manager = PopularSuggestionManager(popularSuggestions: sug!)
-
-let firstBot = Bot(name: "first")
-let firstAllResponses = firstBot.responses
-
-let secondBot = Bot(name: "second")
-let secondAllResponses = secondBot.responses
-
-//manager.use(suggestion: firstAllResponses[8], of: firstBot)
-//manager.use(suggestion: firstAllResponses[1], of: firstBot)
-//manager.use(suggestion: firstAllResponses[3], of: firstBot)
-//manager.use(suggestion: firstAllResponses[0], of: firstBot)
-//manager.use(suggestion: firstAllResponses[1], of: firstBot)
-//
-//manager.use(suggestion: secondAllResponses[8], of: secondBot)
-
-
