@@ -440,6 +440,11 @@ struct PopularSuggestionsBot: AiGramBot {
     var lang: String = ""
     var responses: [BotResponse] = []
     
+    init(language: String) {
+        self.lang = language
+        self.title = language == "ru" ? "Недавние" : "Recent"
+    }
+    
     func toComparable() -> AnyBotComparable {
         return AnyBotComparable(self)
     }
