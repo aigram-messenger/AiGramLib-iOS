@@ -87,7 +87,11 @@ public final class ChatBotsManager {
     private init() {
         FirebaseApp.configure()
         queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 1
+        
+        // FIXME: Когда очередь последовательная происходит баг на iOS 10 - в какой-то момент очередь
+        // в методе handleMessages не завершается и не пускает новые операции.
+//        queue.maxConcurrentOperationCount = 1
+        
         searchQueue = OperationQueue()
         searchQueue.maxConcurrentOperationCount = 1
         
