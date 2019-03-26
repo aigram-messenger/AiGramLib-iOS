@@ -78,7 +78,7 @@ public final class ChatBotsManager {
             // TODO: Возможно нужно будет использовать разные расширения для разных типов ботов в дальнейшем
             forResourcesWithExtension: "chatbot",
             subdirectory: "bots/\(self.baseLanguageCode)"
-            ) ?? []
+        ) ?? []
     }
     
     private lazy var functions = Functions.functions()
@@ -86,11 +86,9 @@ public final class ChatBotsManager {
     
     private init() {
         FirebaseApp.configure()
+
         queue = OperationQueue()
-        
-        // FIXME: Когда очередь последовательная происходит баг на iOS 10 - в какой-то момент очередь
-        // в методе handleMessages не завершается и не пускает новые операции.
-//        queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .userInteractive
         
         searchQueue = OperationQueue()
         searchQueue.maxConcurrentOperationCount = 1
@@ -200,8 +198,10 @@ public final class ChatBotsManager {
         lastMessages = messages
         queue.addOperation { [weak self] in
             guard let self = self else { return }
-            
+
             let localQueue = OperationQueue()
+            localQueue.qualityOfService = .userInteractive
+            
             let lock = NSRecursiveLock()
             var results: [ChatBotResult] = []
             
