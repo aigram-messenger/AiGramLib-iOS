@@ -226,7 +226,8 @@ public final class ChatBotsManager {
             
             results = self.resultsWithAssistantHandling(results: results)
             results = self.resultsWithHolidaysHandling(results: results)
-            self.popularSuggestionsManager.getMostPopularBotsMessages(self.bots).map {
+            
+            self.popularSuggestionsManager.getMostPopularBotsMessages(results).map {
                 let popular = ChatBotResult(
                     bot: PopularSuggestionsBot(language: self.baseLanguageCode),
                     responses: $0.map { BotResponse(response: [$0], tag: "") }

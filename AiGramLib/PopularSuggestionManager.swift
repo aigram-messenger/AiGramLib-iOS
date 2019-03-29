@@ -33,6 +33,12 @@ private struct PopularBotSuggestions: Codable {
         return recent.max { $0.weight < $1.weight }!
     }
     
+    func mostPopular(for tag: String) -> PopularSuggestionWeight? {
+        return recent
+            .filter { $0.tagHash == tag.sdbmhash }
+            .max { $0.weight < $1.weight }
+    }
+    
     init(botId: AiGramBot.ChatBotId, suggestion: String, tag: String) {
         self.botId = botId
         let recentSuggestion = PopularSuggestionWeight.new(suggestion: suggestion, tag: tag)
@@ -97,31 +103,27 @@ final class PopularSuggestionManager {
         self.popularSuggestions = popularSuggestions
     }
     
-    func getMostPopularBotsMessages(_ bots: [AiGramBot]) -> [String]? {
+    func getMostPopularBotsMessages(_ handledResults: [ChatBotResult]) -> [String]? {
         guard
             !popularSuggestions.isEmpty,
-            !bots.isEmpty
+            !handledResults.isEmpty
         else {
             return nil
         }
-
-        let mostPopular = popularSuggestions.map { $0.mostPopular }
+        
         typealias SuggestionsData = (mostPopular: PopularSuggestionWeight, suggestion: String)
-        let result = bots
-            .filter { bot in
-                popularSuggestions.contains { $0.botId == bot.name }
+        
+        let result = handledResults
+            .flatMap {
+                $0.responses.flatMap { botResponse in
+                    botResponse.response.map { ($0, botResponse.tag) }
+                }
             }
-            .flatMap { bot in
-                bot.responses
-                    .filter { response in
-                        mostPopular.contains { $0.tagHash == response.tag.sdbmhash }
-                    }
-                    .flatMap { $0.response }
-            }
-            .compactMap { response -> SuggestionsData? in
-                mostPopular
-                    .first { $0.suggestionHash == response.sdbmhash }
-                    .map { ($0, response) }
+            .compactMap { suggestion, tag -> SuggestionsData? in
+                popularSuggestions
+                    .compactMap { $0.mostPopular(for: tag) }
+                    .first { $0.suggestionHash == suggestion.sdbmhash }
+                    .map { ($0, suggestion) }
             }
             .sorted { $0.mostPopular.weight > $1.mostPopular.weight }
             .map { $0.suggestion }
