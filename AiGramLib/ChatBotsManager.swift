@@ -226,13 +226,17 @@ public final class ChatBotsManager {
             
             results = self.resultsWithAssistantHandling(results: results)
             results = self.resultsWithHolidaysHandling(results: results)
-            
-            self.popularSuggestionsManager.getMostPopularBotsMessages(results).map {
-                let popular = ChatBotResult(
-                    bot: PopularSuggestionsBot(language: self.baseLanguageCode),
-                    responses: $0.map { BotResponse(response: [$0], tag: "") }
-                )
-                results.insert(popular, at: 0)
+
+            if !messages.isEmpty {
+                self.popularSuggestionsManager
+                    .getMostPopularBotsMessages(results)
+                    .map {
+                        let popular = ChatBotResult(
+                            bot: PopularSuggestionsBot(language: self.baseLanguageCode),
+                            responses: $0.map { BotResponse(response: [$0], tag: "") }
+                        )
+                        results.insert(popular, at: 0)
+                    }
             }
             
             DispatchQueue.main.async {
