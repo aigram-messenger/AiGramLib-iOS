@@ -162,10 +162,6 @@ public final class ChatBotsManager {
         )
     }
     
-    public func isHolidaysBot(_ id: AiGramBot.ChatBotId) -> Bool {
-        return id == "holidays"
-    }
-    
     public func use(suggestion: String, tag: String, of botId: AiGramBot.ChatBotId) {
         popularSuggestionsManager.use(suggestion: suggestion, tag: tag, of: botId)
     }
@@ -249,11 +245,11 @@ public final class ChatBotsManager {
     }
     
     private func resultsWithAssistantHandling(results: [ChatBotResult]) -> [ChatBotResult] {
-        return self.results(results, withHandlingBotName: "assistant")
+        return self.results(results, withHandlingBotName: SpecialBotsIds.assistant.rawValue)
     }
     
     private func resultsWithHolidaysHandling(results: [ChatBotResult]) -> [ChatBotResult] {
-        return self.results(results, withHandlingBotName: "holidays")
+        return self.results(results, withHandlingBotName: SpecialBotsIds.holidays.rawValue)
     }
     
     private func results(_ results: [ChatBotResult], withHandlingBotName name: String) -> [ChatBotResult] {
@@ -483,6 +479,17 @@ public final class ChatBotsManager {
             }
         }.resume()
     }
+
+    // MARK: - Bots identification
+
+    public func isHolidaysBot(_ id: AiGramBot.ChatBotId) -> Bool {
+        return id == SpecialBotsIds.holidays.rawValue
+    }
+
+    public func doesShowActionMenu(for botId: AiGramBot.ChatBotId) -> Bool {
+        return botId != SpecialBotsIds.recent.rawValue
+    }
+
 }
 
 extension ChatBotsManager {
