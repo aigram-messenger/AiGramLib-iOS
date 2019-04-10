@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+enum SpecialBotsIds: String, CaseIterable {
+    case assistant
+    case holidays
+    case recent
+}
+
 public struct BotResponse: Codable, Equatable {
     public let response: [String]
     public let tag: String
@@ -426,7 +432,7 @@ struct PopularSuggestionsBot: AiGramBot {
     var isTarget: Bool = false
     var index: Int = -1
     var isLocal: Bool = true
-    var name: ChatBotId = ""
+    var name: ChatBotId = SpecialBotsIds.recent.rawValue
     var nextBotId: ChatBotId?
     var price: Int = 0
     var shortDescription: String = ""
