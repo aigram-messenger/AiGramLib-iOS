@@ -145,7 +145,7 @@ public final class ChatBotsManager {
     }
     
     public func checkOldBotCongratulations() {
-        let currentDate = Date()
+        let currentDate = Calendar.current.startOfDay(for: Date())
         UserDefaults.standard.dictionaryRepresentation()
             .filter { $0.key.contains(congratulationKey) }
             .filter { ($0.value as? Date) != currentDate }
@@ -156,8 +156,9 @@ public final class ChatBotsManager {
     }
     
     public func markAsCongratulatedPeer(at id: UniquePeerId) {
+        let date = Calendar.current.startOfDay(for: Date())
         UserDefaults.standard.set(
-            Date(),
+            date,
             forKey: createCongKey(for: id)
         )
     }
