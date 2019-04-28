@@ -1,0 +1,17 @@
+{
+    "title": "Поговорки и пословицы",
+    "name": "adage",
+    "shortDescription": "Русские пословицы и поговорки, короткие изречения и устойчивые сочетания.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "darth_vader",
+    "price": 0,
+    "addDate": "25.04.2019",
+    "updateDate": "25.04.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

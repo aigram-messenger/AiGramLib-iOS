@@ -1,0 +1,17 @@
+{
+    "title": "Гарфилд",
+    "name": "garfield",
+    "shortDescription": "Ленивый рыжий кот из одноименного фильма.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "films",
+        "unisex"
+    ],
+    "next": "nu_pogodi",
+    "price": 69,
+    "addDate": "25.04.2019",
+    "updateDate": "25.04.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

@@ -1,0 +1,17 @@
+{
+    "title": "Proverbs and sayings",
+    "name": "adage",
+    "shortDescription": "Russian proverbs and sayings, short sayings and stable combinations.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "collections",
+        "unisex"
+    ],
+    "next": "darth_vader",
+    "price": 0,
+    "addDate": "25.04.2019",
+    "updateDate": "25.04.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}
