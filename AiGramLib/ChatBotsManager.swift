@@ -487,6 +487,10 @@ public final class ChatBotsManager {
         return id == SpecialBotsIds.holidays.rawValue
     }
 
+    public func isRecent(_ id: AiGramBot.ChatBotId) -> Bool {
+        return id == SpecialBotsIds.recent.rawValue
+    }
+
     public func doesShowActionMenu(for botId: AiGramBot.ChatBotId) -> Bool {
         return botId != SpecialBotsIds.recent.rawValue
     }
