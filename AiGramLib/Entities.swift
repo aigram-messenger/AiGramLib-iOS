@@ -216,28 +216,22 @@ public struct HolidaysBot: AiGramBot {
         case indefiendHolidayDate
     }
     
-    public enum HolidayType: String {
+    public enum HolidayType: String, CaseIterable {
         case d14_02 = "14.02"
         case d23_02 = "23.02"
         case d08_03 = "08.03"
         case d01_04 = "01.04"
         case d12_04 = "12.04"
-        
+        case d28_04 = "28.04"
+        case d01_05 = "01.05"
+        case d09_05 = "09.05"
+
         fileprivate init(stringDate: String) throws {
-            switch stringDate {
-            case HolidayType.d14_02.rawValue:
-                self = .d14_02
-            case HolidayType.d23_02.rawValue:
-                self = .d23_02
-            case HolidayType.d08_03.rawValue:
-                self = .d08_03
-            case HolidayType.d01_04.rawValue:
-                self = .d01_04
-            case HolidayType.d12_04.rawValue:
-                self = .d12_04
-            default:
+            guard let unwrapped = HolidayType.allCases.first(where: { $0.rawValue == stringDate }) else {
                 throw Error.indefiendHolidayDate
             }
+
+            self = unwrapped
         }
         
         fileprivate func icon(in url: URL) -> UIImage? {
@@ -309,7 +303,7 @@ public struct HolidaysBot: AiGramBot {
         let data = try Data(contentsOf: url.appendingPathComponent("response_\(fileNameComponents.name).json"))
         responses = try decoder.decode(Swift.type(of: responses), from: data)
         
-        holidayTypes = try responses.map { try HolidayType(stringDate: $0.tag) }
+        holidayTypes = responses.compactMap { try? HolidayType(stringDate: $0.tag) }
         let currentTag = HolidaysBot.dateFormatter.string(from: Date())
         activeHoliday = holidayTypes.first(where: { $0.rawValue == currentTag })
         icon = activeHoliday?.icon(in: url) ?? UIImage()

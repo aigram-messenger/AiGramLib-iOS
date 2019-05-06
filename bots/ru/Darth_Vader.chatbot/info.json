@@ -1,0 +1,17 @@
+{
+    "title": "Дарт Вейдер",
+    "name": "darth_vader",
+    "shortDescription": "Повелитель армии Галактической Империи в киноэпопее «Звёздные войны».",
+    "type": "bot",
+    "tags": [
+        "free",
+        "films",
+        "men"
+    ],
+    "next": "garfield",
+    "price": 0,
+    "addDate": "25.04.2019",
+    "updateDate": "25.04.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}

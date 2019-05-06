@@ -1,0 +1,17 @@
+{
+    "title": "Darth Vader",
+    "name": "darth_vader",
+    "shortDescription": "The head of the army of the Galactic Empire in the movie Star Wars.",
+    "type": "bot",
+    "tags": [
+        "free",
+        "films",
+        "men"
+    ],
+    "next": "garfield",
+    "price": 0,
+    "addDate": "25.04.2019",
+    "updateDate": "25.04.2019",
+    "developer": "AiGram Messenger",
+    "lang": "en"
+}

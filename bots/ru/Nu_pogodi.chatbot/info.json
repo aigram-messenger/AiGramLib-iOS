@@ -1,0 +1,16 @@
+{
+    "title": "Ну, погоди!",
+    "name": "nu_pogodi",
+    "shortDescription": "Культовый советский мультсериал про волка и зайца.",
+    "type": "bot",
+    "tags": [
+        "paid",
+        "collections",
+        "unisex"
+    ],
+    "price": 69,
+    "addDate": "02.02.2019",
+    "updateDate": "15.02.2019",
+    "developer": "AiGram Messenger",
+    "lang": "ru"
+}
